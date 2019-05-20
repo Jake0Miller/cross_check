@@ -1,7 +1,10 @@
+require 'csv'
+require 'pry'
+
 class StatTracker
   attr_reader :games, :teams, :game_teams
 
-  def initialize(games, teams, game_teams)
+  def initialize(games_path, teams_path, game_teams)
     @games = games
     @teams = teams
     @game_teams = game_teams
@@ -15,11 +18,14 @@ class StatTracker
   end
 
   def self.get_games(games_path)
-
+    games =
   end
 
-  def self.get_teams(teams_path)
-
+  def self.get_teams(teams_path) #team instance
+    rows = CSV.foreach(teams_path, headers: true) do |row|
+      team = Team.new(row)
+      @teams << team 
+    end
   end
 
   def self.get_game_teams(game_teams_path)
