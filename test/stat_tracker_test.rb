@@ -10,15 +10,32 @@ class StatTrackerTest < Minitest::Test
     @locations = { games: @game_path,
       teams: @team_path,
       game_teams: @game_teams_path }
-    @stat_tracker = StatTracker.new(@locations)
+    @stat_tracker = StatTracker.from_csv(@locations)
   end
 
   def test_it_exists
     assert_instance_of StatTracker, @stat_tracker
   end
 
+  def test_get_games
+    expected = ["2012030221","20122013","P",2013-05-16,"3","6",2,3,
+          "home win OT","left","TD Garden","/api/v1/venues/null",
+          "America/New_York",-4,"EDT"]
+    assert_equal expected, @stat_tracker.games[0]
+  end
+
+  def test_get_teams
+    expected = ["1","23","New Jersey","Devils","NJD","/api/v1/teams/1"]
+    assert_equal expected, @stat_tracker.teams[0]
+  end
+
+  def test_get_game_teams
+    expected = ["2012030221","3","away",FALSE,"OT","John Tortorella",2,35,44,8,
+            3,0,44.8,17,7]
+    assert_equal expected, @stat_tracker.game_teams[0]
+  end
+
   def test_from_csv
-    expected = @locations
-    assert_equal expected, StatTracker.locations
+    skip
   end
 end
