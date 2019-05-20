@@ -22,10 +22,12 @@ class StatTracker
   end
 
   def self.get_teams(teams_path) #team instance
-    rows = CSV.foreach(teams_path, headers: true) do |row|
-      team = Team.new(row)
-      @teams << team 
-    end
+    rows = CSV.read('data/team_info.csv', headers: true)
+    teams = []
+    rows.each do |row|
+      team = Team.new
+      teams << team
+    end 
   end
 
   def self.get_game_teams(game_teams_path)
