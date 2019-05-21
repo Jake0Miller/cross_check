@@ -1,5 +1,0 @@
-"team_id","franchiseId","shortName","teamName","abbreviation","link"
-"5","17","Pittsburgh","Penguins","PIT","/api/v1/teams/5"
-"15","24","Washington","Capitals","WSH","/api/v1/teams/15"
-"18","34","Nashville","Predators","NSH","/api/v1/teams/18"
-"28","29","San Jose","Sharks","SJS","/api/v1/teams/28"
