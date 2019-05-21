@@ -1,3 +1,5 @@
+require 'csv'
+
 class StatTracker
   attr_reader :games, :teams, :game_teams
 
@@ -8,21 +10,20 @@ class StatTracker
   end
 
   def self.from_csv(locations)
-    games_path = get_games(locations[:games])
-    teams_path = get_teams(locations[:teams])
-    game_teams_path = get_game_teams(locations[:game_teams])
-    StatTracker.new(games_path, teams_path, game_teams_path)
+    games = get_games(locations[:games])
+    teams = get_teams(locations[:teams])
+    game_teams = get_game_teams(locations[:game_teams])
+    StatTracker.new(games, teams, game_teams)
   end
 
   def self.get_games(games_path)
+    # get the games from games_path (the csv)
+    # put games into hash with id as key and game row object as value 
+    games = {}
 
-  end
-
-  def self.get_teams(teams_path)
-
-  end
-
-  def self.get_game_teams(game_teams_path)
-
+    CSV.foreach(games_path, headers: true) do |row|
+      games[row.first] = Game.new(row)
+    end
+    games
   end
 end
