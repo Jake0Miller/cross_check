@@ -16,6 +16,13 @@ class StatTracker
     StatTracker.new(games, teams, game_teams)
   end
 
+  def self.get_game_teams(path)
+    game_teams = {}
+    CSV.foreach(path, headers: true) do |row|
+      game_teams["#{row[0]}-#{row[1]}".to_sym] = GameTeam.new(row)
+    end
+    game_teams
+
   def self.get_teams(teams_path) #team instance
     teams = {}
     CSV.foreach('data/team_info.csv', headers: true) do |row|

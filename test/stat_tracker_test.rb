@@ -15,6 +15,10 @@ class StatTrackerTest < Minitest::Test
     assert_instance_of StatTracker, @stat_tracker
   end
 
+  def test_get_game_teams
+    assert_equal 14882, StatTracker.get_game_teams(@game_teams_path).size
+  end 
+  
   def test_get_teams
     @get_teams = StatTracker.get_teams(@team_path)
     assert_equal 33, @get_teams.size
