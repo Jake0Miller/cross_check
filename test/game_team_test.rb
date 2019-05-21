@@ -2,7 +2,7 @@ require './test/test_helper'
 
 class GameTeamTest < Minitest::Test
   def setup
-    rows = CSV.read('./data/game_teams_stats_abridged.csv', headers: true)
+    @rows = CSV.read('./data/game_teams_stats_abridged.csv', headers: true)
     @game_teams = {}
     @rows.each do |row|
       key = "#{row['game_id']}-#{row['team_id']}".to_sym

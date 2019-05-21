@@ -22,6 +22,7 @@ class StatTracker
       game_teams["#{row[0]}-#{row[1]}".to_sym] = GameTeam.new(row)
     end
     game_teams
+  end
 
   def self.get_teams(teams_path) #team instance
     teams = {}
@@ -29,6 +30,7 @@ class StatTracker
       teams[row[0]] = Team.new(row)
     end
     teams
+  end
 
   def self.get_games(games_path)
     # get the games from games_path (the csv)
