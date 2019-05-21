@@ -20,6 +20,11 @@ class StatTrackerTest < Minitest::Test
     assert_equal 33, @get_teams.size
   end
 
+  def test_get_games
+    @get_games = StatTracker.get_games(@game_path)
+    assert_equal 7441, @get_games.size
+  end
+
   def test_from_csv
     skip
   end
