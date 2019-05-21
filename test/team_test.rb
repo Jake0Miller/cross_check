@@ -1,9 +1,4 @@
-require 'minitest'
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/stat_tracker'
-require './lib/team'
-require 'pry'
+require './test/test_helper'
 
 class TeamTest < Minitest::Test
 
@@ -14,7 +9,6 @@ class TeamTest < Minitest::Test
 
     @rows.each do |row|
       @teams[row["franchiseId"]] = Team.new(row)
-      #binding.pry
     end
   end
 
