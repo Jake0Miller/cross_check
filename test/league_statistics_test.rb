@@ -22,4 +22,12 @@ class StatTrackerTest < Minitest::Test
   def test_worst_offense
     assert_equal "Rangers", @stat_tracker.worst_offense
   end
+
+  def test_best_defense
+    assert_equal "Bruins", @stat_tracker.best_offense
+  end
+
+  def test_worst_defense
+    assert_equal "Rangers", @stat_tracker.worst_offense
+  end
 end
