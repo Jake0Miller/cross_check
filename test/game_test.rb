@@ -4,8 +4,7 @@ class GameTest < MiniTest::Test
 
   def setup
     @game_path = './data/game_dummy.csv'
-
-    @rows = CSV.read(@game_path, headers: true)
+    @rows = CSV.read(@game_path, headers: true, header_converters: CSV::HeaderConverters[:symbol])
     @games = []
 
     @rows.each do |row|
@@ -18,7 +17,6 @@ class GameTest < MiniTest::Test
   end
 
   def test_returns_game
-    # first row stored in games.first
     assert_equal @rows.first, @games.first.game_row
   end
 end
