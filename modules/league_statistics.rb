@@ -140,4 +140,21 @@ module LeagueStatistics
   def lowest_scoring_home_team
     @teams[average_score_home.min_by { |k,v| v }.first].team_name
   end
+
+  def total_wins
+    @games.inject({}) do |hash, game|
+      if game[1].away_goals > game[1].home_goals
+        hash[game[1].away_team_id.to_sym] ||= 0
+        hash[game[1].away_team_id.to_sym] += 1
+      elsif game[1].away_goals < game[1].home_goals
+        hash[game[1].home_team_id.to_sym] ||= 0
+        hash[game[1].home_team_id.to_sym] = 1
+      end
+      hash
+    end
+  end
+
+  def winningest_team
+    @teams[total_wins.max_by { |k,v| v }.first].team_name
+  end
 end

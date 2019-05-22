@@ -46,4 +46,17 @@ class StatTrackerTest < Minitest::Test
   def test_lowest_scoring_home_team
     assert_equal "Rangers", @stat_tracker.lowest_scoring_home_team
   end
+
+  def test_winningest_team
+    skip
+    assert_equal "Bruins", @stat_tracker.winningest_team
+  end
+
+  def test_best_fans
+    skip
+  end
+
+  def test_worst_fans
+    skip
+  end
 end
