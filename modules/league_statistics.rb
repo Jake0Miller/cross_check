@@ -5,20 +5,20 @@ module LeagueStatistics
 
   def total_goals
     @games.inject({}) do |hash, game|
-      hash[game[1].away_team_id.to_sym] ||= 0
-      hash[game[1].away_team_id.to_sym] += game[1].away_goals.to_i
-      hash[game[1].home_team_id.to_sym] ||= 0
-      hash[game[1].home_team_id.to_sym] = game[1].home_goals.to_i
+      hash[game.away_team_id.to_sym] ||= 0
+      hash[game.away_team_id.to_sym] += game.away_goals.to_i
+      hash[game.home_team_id.to_sym] ||= 0
+      hash[game.home_team_id.to_sym] = game.home_goals.to_i
       hash
     end
   end
 
   def total_games
     @games.inject({}) do |hash, game|
-      hash[game[1].away_team_id.to_sym] ||= 0
-      hash[game[1].away_team_id.to_sym] += 1
-      hash[game[1].home_team_id.to_sym] ||= 0
-      hash[game[1].home_team_id.to_sym] = 1
+      hash[game.away_team_id.to_sym] ||= 0
+      hash[game.away_team_id.to_sym] += 1
+      hash[game.home_team_id.to_sym] ||= 0
+      hash[game.home_team_id.to_sym] = 1
       hash
     end
   end
@@ -44,10 +44,10 @@ module LeagueStatistics
 
   def total_goals_allowed
     @games.inject({}) do |hash, game|
-      hash[game[1].away_team_id.to_sym] ||= 0
-      hash[game[1].away_team_id.to_sym] += game[1].home_goals.to_i
-      hash[game[1].home_team_id.to_sym] ||= 0
-      hash[game[1].home_team_id.to_sym] = game[1].away_goals.to_i
+      hash[game.away_team_id.to_sym] ||= 0
+      hash[game.away_team_id.to_sym] += game.home_goals.to_i
+      hash[game.home_team_id.to_sym] ||= 0
+      hash[game.home_team_id.to_sym] = game.away_goals.to_i
       hash
     end
   end
@@ -73,16 +73,16 @@ module LeagueStatistics
 
   def total_goals_away
     @games.inject({}) do |hash, game|
-      hash[game[1].away_team_id.to_sym] ||= 0
-      hash[game[1].away_team_id.to_sym] += game[1].away_goals.to_i
+      hash[game.away_team_id.to_sym] ||= 0
+      hash[game.away_team_id.to_sym] += game.away_goals.to_i
       hash
     end
   end
 
   def total_goals_home
     @games.inject({}) do |hash, game|
-      hash[game[1].home_team_id.to_sym] ||= 0
-      hash[game[1].home_team_id.to_sym] = game[1].home_goals.to_i
+      hash[game.home_team_id.to_sym] ||= 0
+      hash[game.home_team_id.to_sym] = game.home_goals.to_i
       hash
     end
   end
@@ -143,12 +143,12 @@ module LeagueStatistics
 
   def total_wins
     @games.inject({}) do |hash, game|
-      if game[1].away_goals > game[1].home_goals
-        hash[game[1].away_team_id.to_sym] ||= 0
-        hash[game[1].away_team_id.to_sym] += 1
-      elsif game[1].away_goals < game[1].home_goals
-        hash[game[1].home_team_id.to_sym] ||= 0
-        hash[game[1].home_team_id.to_sym] = 1
+      if game.away_goals > game.home_goals
+        hash[game.away_team_id.to_sym] ||= 0
+        hash[game.away_team_id.to_sym] += 1
+      elsif game.away_goals < game.home_goals
+        hash[game.home_team_id.to_sym] ||= 0
+        hash[game.home_team_id.to_sym] = 1
       end
       hash
     end

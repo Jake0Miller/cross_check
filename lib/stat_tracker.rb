@@ -18,9 +18,9 @@ class StatTracker
   end
 
   def self.get_game_teams(path)
-    game_teams = {}
+    game_teams = []
     CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
-      game_teams["#{row[0]}-#{row[1]}".to_sym] = GameTeam.new(row)
+      game_teams << GameTeam.new(row)
     end
     game_teams
   end
@@ -34,10 +34,9 @@ class StatTracker
   end
 
   def self.get_games(path)
-    games = {}
-
+    games = []
     CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
-      games[row[0].to_sym] = Game.new(row)
+      games << Game.new(row)
     end
     games
   end
