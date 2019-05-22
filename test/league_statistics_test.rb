@@ -81,12 +81,15 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Bruins", @stat_tracker.winningest_team
   end
 
-  def test_home_win_percentage
-
+  def test_win_percentage
+    #assert_equal 0.00, @stat_tracker.win_percentage(false, true)["3".to_sym]
+    assert_equal 100.00, @stat_tracker.win_percentage(true, false)["6".to_sym]
+    assert_equal 50.00, @stat_tracker.win_percentage(false, true)["6".to_sym]
+    assert_equal 50.00, @stat_tracker.win_percentage(true, false)["3".to_sym]
   end
 
   def test_away_win_percentage
-
+    skip
   end
 
   def test_best_fans

@@ -4,13 +4,11 @@ module LeagueStatistics
   end
 
   def total_goals(home=true, away=true)
-    @games.inject({}) do |hash, game|
+    @games.inject(Hash.new(0)) do |hash, game|
       if away
-        hash[game.away_team_id.to_sym] ||= 0
         hash[game.away_team_id.to_sym] += game.away_goals.to_i
       end
       if home
-        hash[game.home_team_id.to_sym] ||= 0
         hash[game.home_team_id.to_sym] += game.home_goals.to_i
       end
       hash
@@ -18,13 +16,11 @@ module LeagueStatistics
   end
 
   def total_games(home=true, away=true)
-    @games.inject({}) do |hash, game|
+    @games.inject(Hash.new(0)) do |hash, game|
       if away
-        hash[game.away_team_id.to_sym] ||= 0
         hash[game.away_team_id.to_sym] += 1
       end
       if home
-        hash[game.home_team_id.to_sym] ||= 0
         hash[game.home_team_id.to_sym] += 1
       end
       hash
@@ -32,12 +28,10 @@ module LeagueStatistics
   end
 
   def average_score(home = true, away = true)
-    @teams.inject({}) do |hash, team|
-      if total_goals[team[0]].nil?
-        hash
-      else
-        goals = total_goals(home, away)[team[0]]
-        games = total_games(home, away)[team[0]]
+    @teams.inject(Hash.new(0)) do |hash, team|
+      goals = total_goals(home, away)[team[0]]
+      games = total_games(home, away)[team[0]]
+      if games != 0
         hash[team[0]] = goals / games.to_f
       end
       hash
@@ -53,10 +47,8 @@ module LeagueStatistics
   end
 
   def total_goals_allowed
-    @games.inject({}) do |hash, game|
-      hash[game.away_team_id.to_sym] ||= 0
+    @games.inject(Hash.new(0)) do |hash, game|
       hash[game.away_team_id.to_sym] += game.home_goals.to_i
-      hash[game.home_team_id.to_sym] ||= 0
       hash[game.home_team_id.to_sym] += game.away_goals.to_i
       hash
     end
@@ -97,13 +89,11 @@ module LeagueStatistics
     @teams[average_score(true, false).min_by { |k,v| v }.first].team_name
   end
 
-  def total_wins
-    @games.inject({}) do |hash, game|
-      if game.away_goals > game.home_goals
-        hash[game.away_team_id.to_sym] ||= 0
+  def total_wins(home = true, away = true)
+    @games.inject(Hash.new(0)) do |hash, game|
+      if game.away_goals > game.home_goals && away
         hash[game.away_team_id.to_sym] += 1
-      elsif game.away_goals < game.home_goals
-        hash[game.home_team_id.to_sym] ||= 0
+      elsif game.away_goals < game.home_goals && home
         hash[game.home_team_id.to_sym] += 1
       end
       hash
@@ -114,5 +104,14 @@ module LeagueStatistics
     @teams[total_wins.max_by { |k,v| v }.first].team_name
   end
 
-  
+  def win_percentage(home = true, away = true)
+    total_wins(home,away).map do |k,v|
+      [k,v *= 100.0/total_games(home,away)[k]]
+    end.to_h
+  end
+
+  def best_fans
+    home_percent = home_win_percentage
+    away_percent = away_win_percentage
+  end
 end
