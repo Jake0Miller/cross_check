@@ -1,7 +1,9 @@
 require './modules/league_statistics'
 
 class StatTracker
+  #include TeamStats
   include LeagueStatistics
+
   attr_reader :games, :teams, :game_teams
 
   def initialize(games, teams, game_teams)
