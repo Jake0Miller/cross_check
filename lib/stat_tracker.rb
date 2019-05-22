@@ -1,6 +1,8 @@
+require './modules/game_statistics'
 require './modules/league_statistics'
 
 class StatTracker
+  include GameStatistics
   #include TeamStats
   include LeagueStatistics
 
@@ -34,7 +36,7 @@ class StatTracker
     end
     teams
   end
-
+  
   def self.get_games(path)
     games = []
     CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|

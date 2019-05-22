@@ -4,7 +4,6 @@ class GameTest < MiniTest::Test
 
   def setup
     @game_path = './data/game_dummy.csv'
-
     @rows = CSV.read(@game_path, headers: true, header_converters: CSV::HeaderConverters[:symbol])
     @games = []
 
