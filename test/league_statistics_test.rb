@@ -15,12 +15,37 @@ class StatTrackerTest < Minitest::Test
     assert_equal 6, @stat_tracker.teams.size
   end
 
+  def test_total_goals
+    assert_equal 16, @stat_tracker.total_goals["6".to_sym]
+    assert_equal 10, @stat_tracker.total_goals["3".to_sym]
+  end
+
+  def test_total_games
+    assert_equal 5, @stat_tracker.total_games["6".to_sym]
+    assert_equal 5, @stat_tracker.total_games["3".to_sym]
+  end
+
+  def test_average_score
+    assert_equal 3.2, @stat_tracker.average_score["6".to_sym]
+    assert_equal 2.0, @stat_tracker.average_score["3".to_sym]
+  end
+
   def test_best_offense
     assert_equal "Bruins", @stat_tracker.best_offense
   end
 
   def test_worst_offense
     assert_equal "Rangers", @stat_tracker.worst_offense
+  end
+
+  def test_total_goals_allowed
+    assert_equal 10, @stat_tracker.total_goals_allowed["6".to_sym]
+    assert_equal 16, @stat_tracker.total_goals_allowed["3".to_sym]
+  end
+
+  def test_average_goals_allowed
+    assert_equal 2.0, @stat_tracker.average_goals_allowed["6".to_sym]
+    assert_equal 3.2, @stat_tracker.average_goals_allowed["3".to_sym]
   end
 
   def test_best_defense
@@ -47,9 +72,21 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Rangers", @stat_tracker.lowest_scoring_home_team
   end
 
+  def test_total_wins
+    assert_equal 4, @stat_tracker.total_wins["6".to_sym]
+    assert_equal 1, @stat_tracker.total_wins["3".to_sym]
+  end
+
   def test_winningest_team
-    skip
     assert_equal "Bruins", @stat_tracker.winningest_team
+  end
+
+  def test_home_win_percentage
+
+  end
+
+  def test_away_win_percentage
+
   end
 
   def test_best_fans

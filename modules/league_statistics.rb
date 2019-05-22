@@ -11,7 +11,7 @@ module LeagueStatistics
       end
       if home
         hash[game.home_team_id.to_sym] ||= 0
-        hash[game.home_team_id.to_sym] = game.home_goals.to_i
+        hash[game.home_team_id.to_sym] += game.home_goals.to_i
       end
       hash
     end
@@ -25,7 +25,7 @@ module LeagueStatistics
       end
       if home
         hash[game.home_team_id.to_sym] ||= 0
-        hash[game.home_team_id.to_sym] = 1
+        hash[game.home_team_id.to_sym] += 1
       end
       hash
     end
@@ -39,7 +39,6 @@ module LeagueStatistics
         goals = total_goals(home, away)[team[0]]
         games = total_games(home, away)[team[0]]
         hash[team[0]] = goals / games.to_f
-        # hash[team[0]] = total_goals[team[0]] / total_games[team[0]].to_f
       end
       hash
     end
@@ -58,7 +57,7 @@ module LeagueStatistics
       hash[game.away_team_id.to_sym] ||= 0
       hash[game.away_team_id.to_sym] += game.home_goals.to_i
       hash[game.home_team_id.to_sym] ||= 0
-      hash[game.home_team_id.to_sym] = game.away_goals.to_i
+      hash[game.home_team_id.to_sym] += game.away_goals.to_i
       hash
     end
   end
@@ -83,19 +82,19 @@ module LeagueStatistics
   end
 
   def highest_scoring_visitor
-    @teams[average_score(home = false).max_by { |k,v| v }.first].team_name
+    @teams[average_score(false, true).max_by { |k,v| v }.first].team_name
   end
 
   def lowest_scoring_visitor
-    @teams[average_score(home = false).min_by { |k,v| v }.first].team_name
+    @teams[average_score(false, true).min_by { |k,v| v }.first].team_name
   end
 
   def highest_scoring_home_team
-    @teams[average_score(away = false).max_by { |k,v| v }.first].team_name
+    @teams[average_score(true, false).max_by { |k,v| v }.first].team_name
   end
 
   def lowest_scoring_home_team
-    @teams[average_score(away = false).min_by { |k,v| v }.first].team_name
+    @teams[average_score(true, false).min_by { |k,v| v }.first].team_name
   end
 
   def total_wins
@@ -105,7 +104,7 @@ module LeagueStatistics
         hash[game.away_team_id.to_sym] += 1
       elsif game.away_goals < game.home_goals
         hash[game.home_team_id.to_sym] ||= 0
-        hash[game.home_team_id.to_sym] = 1
+        hash[game.home_team_id.to_sym] += 1
       end
       hash
     end
@@ -114,4 +113,6 @@ module LeagueStatistics
   def winningest_team
     @teams[total_wins.max_by { |k,v| v }.first].team_name
   end
+
+  
 end
