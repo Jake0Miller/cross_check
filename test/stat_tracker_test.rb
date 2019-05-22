@@ -15,10 +15,6 @@ class StatTrackerTest < Minitest::Test
     assert_instance_of StatTracker, @stat_tracker
   end
 
-  def test_get_game_teams
-    assert_equal 14882, StatTracker.get_game_teams(@game_teams_path).size
-  end 
-  
   def test_get_teams
     @get_teams = StatTracker.get_teams(@team_path)
     assert_equal 33, @get_teams.size
@@ -31,5 +27,17 @@ class StatTrackerTest < Minitest::Test
 
   def test_from_csv
     skip
+  end
+
+  def test_team_info
+
+    expected = {"team_id" => "1",
+                "franchiseId" => "23",
+                "shortName" => "New Jersey",
+                "teamName" => "Devils",
+                "abbreviation" => "NJD",
+                "link" => "/api/v1/teams/1"}
+
+    assert_equal expected, @stat_tracker.team_info("2")
   end
 end
