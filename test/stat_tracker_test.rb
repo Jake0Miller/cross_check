@@ -2,7 +2,7 @@ require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    @game_path = './data/game.csv'
+    @game_path = './data/game_dummy.csv'
     @team_path = './data/team_info.csv'
     @game_teams_path = './data/game_teams_stats.csv'
     @locations = { games: @game_path,
@@ -17,8 +17,8 @@ class StatTrackerTest < Minitest::Test
 
   def test_get_game_teams
     assert_equal 14882, StatTracker.get_game_teams(@game_teams_path).size
-  end 
-  
+  end
+
   def test_get_teams
     @get_teams = StatTracker.get_teams(@team_path)
     assert_equal 33, @get_teams.size
@@ -26,7 +26,7 @@ class StatTrackerTest < Minitest::Test
 
   def test_get_games
     @get_games = StatTracker.get_games(@game_path)
-    assert_equal 7441, @get_games.size
+    assert_equal 5, @get_games.size
   end
 
   def test_from_csv
