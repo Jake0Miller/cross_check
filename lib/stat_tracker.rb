@@ -1,7 +1,7 @@
 require 'csv'
 
 class StatTracker
-  include TeamStats
+  #include TeamStats
   attr_reader :games, :teams, :game_teams
 
   def initialize(games, teams, game_teams)
@@ -25,7 +25,7 @@ class StatTracker
 
   def self.get_teams(teams_path) #team instance
     teams = {}
-    CSV.foreach('data/team_info.csv', headers: true) do |row|
+    CSV.foreach('data/team_info.csv', headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
       teams[row[0]] = Team.new(row)
     end
     teams

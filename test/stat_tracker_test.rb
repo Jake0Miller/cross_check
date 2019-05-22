@@ -30,7 +30,7 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_team_info
-
+    skip
     expected = {"team_id" => "1",
                 "franchiseId" => "23",
                 "shortName" => "New Jersey",
