@@ -1,14 +1,14 @@
-#require './modules/game_statistics'
-#require './modules/league_statistics'
+require './modules/game_statistics'
+require './modules/league_statistics'
 require './modules/team_information'
 require './modules/team_statistics'
 require 'pry'
 
 class StatTracker
-  #include GameStatistics
+  include GameStatistics
   include TeamStatistics
   include TeamInformation
-  #include LeagueStatistics
+  include LeagueStatistics
 
   attr_reader :games, :teams, :game_teams
 

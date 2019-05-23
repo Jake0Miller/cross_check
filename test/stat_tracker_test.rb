@@ -41,15 +41,4 @@ class StatTrackerTest < Minitest::Test
     assert_equal 6, @stat_tracker.teams.size
     assert_equal 2, @stat_tracker.game_teams.size
   end
-
-  def test_team_info
-    expected = {"team_id" => "1",
-                "franchiseId" => "23",
-                "shortName" => "New Jersey",
-                "teamName" => "Devils",
-                "abbreviation" => "NJD",
-                "link" => "/api/v1/teams/1"}
-                
-    assert_equal expected, @stat_tracker.team_info("1".to_sym)
-  end
 end
