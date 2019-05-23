@@ -1,10 +1,12 @@
-require './modules/game_statistics'
-require './modules/league_statistics'
+#require './modules/game_statistics'
+#require './modules/league_statistics'
+require_relative 'team_information'
+require 'pry'
 
 class StatTracker
-  include GameStatistics
-  #include TeamStats
-  include LeagueStatistics
+  #include GameStatistics
+  include TeamInformation
+  #include LeagueStatistics
 
   attr_reader :games, :teams, :game_teams
 
@@ -36,7 +38,7 @@ class StatTracker
     end
     teams
   end
-  
+
   def self.get_games(path)
     games = []
     CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
@@ -45,3 +47,4 @@ class StatTracker
     games
   end
 end
+binding.pry
