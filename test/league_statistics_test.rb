@@ -1,9 +1,9 @@
 require './test/test_helper'
 
-class StatTrackerTest < Minitest::Test
+class LeagueStatisticsTest < Minitest::Test
   def setup
-    @game_path = './data/game_dummy.csv'
-    @team_path = './data/team_dummy.csv'
+    @game_path = './data/game_jake.csv'
+    @team_path = './data/team_jake.csv'
     @game_teams_path = './data/game_teams_stats_dummy.csv'
     @locations = { games: @game_path,
       teams: @team_path,
