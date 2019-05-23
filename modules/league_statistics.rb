@@ -67,7 +67,6 @@ module LeagueStatistics
     end
   end
 
-  #fix this
   def best_defense
     goals_allowed = average_goals_allowed.find_all do |team|
       !team[1].nan?
@@ -75,7 +74,6 @@ module LeagueStatistics
     @teams[goals_allowed.min_by { |k,v| v }.first].team_name
   end
 
-  #fix this
   def worst_defense
     goals_allowed = average_goals_allowed.find_all do |team|
       !team[1].nan?
