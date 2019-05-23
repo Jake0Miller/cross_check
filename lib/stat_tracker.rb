@@ -1,10 +1,12 @@
 #require './modules/game_statistics'
 #require './modules/league_statistics'
 require './modules/team_information'
+require './modules/team_statistics'
 require 'pry'
 
 class StatTracker
   #include GameStatistics
+  include TeamStatistics
   include TeamInformation
   #include LeagueStatistics
 

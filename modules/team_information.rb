@@ -1,16 +1,14 @@
 #this module works with team_stats
+require "pry"
 module TeamInformation
 
   def find_team(team_id)
-    @teams.find do |team|
-      team.team_id == team_id
-    end
+    #binding.pry
+    @teams[team_id.to_sym]
   end
 
   def get_team_name_from_id(team_id)
-    @teams.find do |team|
-      team.shortName == team_id
-    end
+    find_team(team_id).team_name
   end
 
   def find_games_by_team_id(team_id, games = @games)
@@ -18,4 +16,4 @@ module TeamInformation
       game.away_team_id == team_id || game.home_team_id == team_id
     end
   end
-end 
+end

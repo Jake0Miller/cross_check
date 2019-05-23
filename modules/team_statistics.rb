@@ -1,6 +1,6 @@
 module TeamStatistics
 
-  def team_info 
+  def team_info(team_id)
 
   end
 

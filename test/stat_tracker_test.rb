@@ -1,4 +1,5 @@
 require './test/test_helper'
+require 'pry'
 
 class StatTrackerTest < Minitest::Test
   def setup
@@ -42,14 +43,13 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_team_info
-    
     expected = {"team_id" => "1",
                 "franchiseId" => "23",
                 "shortName" => "New Jersey",
                 "teamName" => "Devils",
                 "abbreviation" => "NJD",
                 "link" => "/api/v1/teams/1"}
-
-    assert_equal expected, @stat_tracker.team_info("1")
+                
+    assert_equal expected, @stat_tracker.team_info("1".to_sym)
   end
 end
