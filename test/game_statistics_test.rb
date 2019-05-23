@@ -14,13 +14,22 @@ class GameStatisticsTest < Minitest::Test
   end
 
   def test_it_gets_highest_total_score
-    skip 
+    # skip
     assert_equal 7, @stat_tracker.highest_total_score
   end
 
   def test_it_gets_lowest_total_score
-    skip
+    # skip
     assert_equal 3, @stat_tracker.lowest_total_score
   end
 
+  def test_it_gets_percentage_home_wins
+    # skip
+    assert_equal 80.00, @stat_tracker.percentage_home_wins
+  end
+
+  def test_it_gets_percentage_home_wins
+    # skip
+    assert_equal 20.00, @stat_tracker.percentage_away_wins
+  end
 end
