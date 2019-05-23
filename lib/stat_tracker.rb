@@ -1,6 +1,6 @@
 #require './modules/game_statistics'
 #require './modules/league_statistics'
-require_relative 'team_information'
+require './modules/team_information'
 require 'pry'
 
 class StatTracker
@@ -47,4 +47,4 @@ class StatTracker
     games
   end
 end
-binding.pry
+#binding.pry

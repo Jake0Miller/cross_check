@@ -16,5 +16,6 @@ module TeamInformation
   def find_games_by_team_id(team_id, games = @games)
     games.find do |game|
       game.away_team_id == team_id || game.home_team_id == team_id
-    end 
+    end
   end
+end 
