@@ -7,7 +7,8 @@ require_relative '../modules/league_statistics'
 
 class StatTracker
   include GameStatistics
-  #include TeamStats
+  include TeamStatistics
+  include TeamInformation
   include LeagueStatistics
 
   attr_reader :games, :teams, :game_teams
@@ -49,3 +50,4 @@ class StatTracker
     games
   end
 end
+#binding.pry
