@@ -98,7 +98,7 @@ module LeagueStatistics
   end
 
   def total_wins(home = true, away = true)
-    wins = @games.inject({}) do |hash, game|
+    @games.inject({}) do |hash, game|
       hash[game.away_team_id.to_sym] ||= 0
       hash[game.home_team_id.to_sym] ||= 0
       if game.away_goals > game.home_goals && away

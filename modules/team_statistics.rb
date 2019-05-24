@@ -15,15 +15,6 @@ module TeamStatistics
   end
 
   def average_win_percentage(team_id)
-    team_games = find_games_by_team_id(team_id)
-    wins = 0
-    team_games.each do |game|
-      if team_id == game.home_team_id && home_won?(game)
-        wins += 1
-      elsif team_id == game.away_team_id && away_won?(game)
-        wins += 1
-      end
-    end
-    win_percent = (100.0*wins/team_games.length).round(2)
+    percent_wins(team_id,find_games_by_team_id(team_id))
   end
 end
