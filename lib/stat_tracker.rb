@@ -1,8 +1,11 @@
-require 'csv'
 require './modules/game_statistics'
+require './modules/league_statistics'
 
 class StatTracker
   include GameStatistics
+  #include TeamStats
+  include LeagueStatistics
+
   attr_reader :games, :teams, :game_teams
 
   def initialize(games, teams, game_teams)
@@ -19,27 +22,24 @@ class StatTracker
   end
 
   def self.get_game_teams(path)
-    game_teams = {}
-    CSV.foreach(path, headers: true) do |row|
-      game_teams["#{row[0]}-#{row[1]}".to_sym] = GameTeam.new(row)
+    game_teams = []
+    CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
+      game_teams << GameTeam.new(row)
     end
     game_teams
   end
 
-  def self.get_teams(teams_path) #team instance
+  def self.get_teams(path)
     teams = {}
-    CSV.foreach('data/team_info.csv', headers: true) do |row|
-      teams[row[0]] = Team.new(row)
+    CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
+      teams[row[0].to_sym] = Team.new(row)
     end
     teams
   end
-
-  def self.get_games(games_path)
-    # get the games from games_path (the csv)
-    # put games into hash with id as key and game row object as value
+  
+  def self.get_games(path)
     games = []
-
-    CSV.foreach(games_path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
+    CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
       games << Game.new(row)
     end
     games
