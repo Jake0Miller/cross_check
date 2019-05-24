@@ -1,4 +1,3 @@
-require 'pry'
 class Team
   attr_reader :team_row, :team_name, :team_id
 
@@ -12,4 +11,3 @@ class Team
     # @link = team_row[:link]
   end
 end
-#binding.pry
