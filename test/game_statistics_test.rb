@@ -1,4 +1,3 @@
-require './lib/stat_tracker'
 require './test/test_helper'
 
 class GameStatisticsTest < Minitest::Test
@@ -14,7 +13,6 @@ class GameStatisticsTest < Minitest::Test
   end
 
   def test_it_gets_highest_total_score
-    # skip
     assert_equal 7, @stat_tracker.highest_total_score
   end
 
