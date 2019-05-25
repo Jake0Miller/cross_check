@@ -50,7 +50,12 @@ class TeamStatsTest < Minitest::Test
     assert_equal "Rangers", @stat_tracker.favorite_opponent("6")
   end
 
-  def rival
+  def test_rival
     assert_equal "Lightning", @stat_tracker.rival("6")
+  end
+
+  def test_head_to_head
+    expected = {"Lightning" => 20.0, "Rangers" => 80.0}
+    assert_equal expected, @stat_tracker.head_to_head("6")
   end
 end

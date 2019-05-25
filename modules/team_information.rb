@@ -7,8 +7,8 @@ module TeamInformation
   #   find_team(team_id).team_name
   # end
 
-  def find_games_by_team_id(team_id)
-    @games.find_all do |game|
+  def find_games_by_team_id(team_id, games = @games)
+    games.find_all do |game|
       game.away_team_id == team_id || game.home_team_id == team_id
     end
   end
@@ -48,5 +48,5 @@ module TeamInformation
     else
       game.away_goals
     end
-  end  
+  end
 end

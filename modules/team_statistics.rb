@@ -33,34 +33,27 @@ module TeamStatistics
   end
 
   def favorite_opponent(our_team_id)
-    games = find_games_by_team_id(our_team_id)
-    lowest_percent_wins = 100
-    fav_opponent = nil
-    @teams.each do |team|
-      if team[1].team_id != our_team_id
-        this_teams_wins = percent_wins(team[1].team_id, games)
-        if this_teams_wins < lowest_percent_wins
-          lowest_percent_wins = this_teams_wins
-          fav_opponent = team[1]
-        end
-      end
-    end
-    fav_opponent.team_name
+    head_to_head(our_team_id).max_by do |team,percent|
+      percent
+    end[0]
   end
 
   def rival(our_team_id)
+    head_to_head(our_team_id).min_by do |team,percent|
+      percent
+    end[0]
+  end
+
+  def head_to_head(our_team_id)
     games = find_games_by_team_id(our_team_id)
-    highest_percent_wins = 0
-    rival_team = nil
+    head_hash = {}
     @teams.each do |team|
       if team[1].team_id != our_team_id
-        this_teams_wins = percent_wins(team[1].team_id, games)
-        if this_teams_wins > highest_percent_wins
-          highest_percent_wins = this_teams_wins
-          rival_team = team[1]
-        end
+        this_teams_games = find_games_by_team_id(team[1].team_id, games)
+        this_teams_wins = percent_wins(our_team_id, this_teams_games)
+        head_hash[team[1].team_name] = this_teams_wins
       end
     end
-    rival_team.team_name
+    head_hash
   end
 end
