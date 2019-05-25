@@ -1,7 +1,6 @@
 require './test/test_helper'
 
 class GameStatisticsTest < Minitest::Test
-
   def setup
     @game_path = './data/game_dummy.csv'
     @team_path = './data/team_info.csv'
@@ -28,8 +27,8 @@ class GameStatisticsTest < Minitest::Test
     assert_equal 80.00, @stat_tracker.percentage_home_wins
   end
 
-  def test_it_gets_percentage_away_wins
-    assert_equal 20.00, @stat_tracker.percentage_away_wins
+  def test_it_gets_percentage_visitor_wins
+    assert_equal 20.00, @stat_tracker.percentage_visitor_wins
   end
 
   def test_it_gets_count_of_games_by_season
