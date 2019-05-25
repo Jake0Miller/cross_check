@@ -3,7 +3,7 @@ require './test/test_helper'
 class TeamInfoTest < Minitest::Test
   def setup
     @game_path = './data/game_tay.csv'
-    @team_path = './data/team_dummy.csv'
+    @team_path = './data/team_tay.csv'
     @game_teams_path = './data/game_teams_stats_dummy.csv'
     @locations = { games: @game_path,
       teams: @team_path,

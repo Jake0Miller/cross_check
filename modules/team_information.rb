@@ -7,8 +7,8 @@ module TeamInformation
   #   find_team(team_id).team_name
   # end
 
-  def find_games_by_team_id(team_id)
-    @games.find_all do |game|
+  def find_games_by_team_id(team_id, games = @games)
+    games.find_all do |game|
       game.away_team_id == team_id || game.home_team_id == team_id
     end
   end
@@ -40,5 +40,13 @@ module TeamInformation
       won_at_home?(team_id,game) || won_away?(team_id,game)
     end
     (100.0*wins/games.length).round(2)
+  end
+
+  def extreme_scores(team_id, game)
+    if team_id == game.home_team_id
+      game.home_goals
+    else
+      game.away_goals
+    end
   end
 end
