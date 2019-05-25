@@ -13,9 +13,9 @@ class TeamStatsTest < Minitest::Test
 
   def test_team_info
     expected = {"team_id" => "14",
-                "franchiseId" => "31",
-                "shortName" => "Tampa Bay",
-                "teamName" => "Lightning",
+                "franchise_id" => "31",
+                "short_name" => "Tampa Bay",
+                "team_name" => "Lightning",
                 "abbreviation" => "TBL",
                 "link" => "/api/v1/teams/14"}
 
@@ -32,8 +32,8 @@ class TeamStatsTest < Minitest::Test
   end
 
   def test_average_win_percentage
-    assert_equal 50.0, @stat_tracker.average_win_percentage("6")
-    assert_equal 20.0, @stat_tracker.average_win_percentage("3")
+    assert_equal 0.5, @stat_tracker.average_win_percentage("6")
+    assert_equal 0.2, @stat_tracker.average_win_percentage("3")
   end
 
   def test_most_goals_scored
@@ -55,7 +55,7 @@ class TeamStatsTest < Minitest::Test
   end
 
   def test_head_to_head
-    expected = {"Lightning" => 20.0, "Rangers" => 80.0}
+    expected = {"Lightning" => 0.2, "Rangers" => 0.8}
     assert_equal expected, @stat_tracker.head_to_head("6")
   end
 end

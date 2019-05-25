@@ -56,7 +56,7 @@ module LeagueHelper
 
   def win_percentage(home = true, away = true)
     total_wins(home,away).map do |k,v|
-      [k,v *= (100.0/total_games(home,away)[k]).round(2)]
+      [k,v *= (1.0/total_games(home,away)[k]).round(2)]
     end.to_h
   end
 

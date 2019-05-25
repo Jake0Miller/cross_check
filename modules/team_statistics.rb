@@ -1,7 +1,7 @@
 module TeamStatistics
-
   def team_info(team_id)
-    keys = ["team_id", "franchiseId", "shortName", "teamName", "abbreviation", "link"]
+    team_id = team_id.to_sym
+    keys = ["team_id", "franchise_id", "short_name", "team_name", "abbreviation", "link"]
     values = @teams[team_id].team_row.to_h.values
     keys.zip(values).to_h
   end
@@ -46,14 +46,6 @@ module TeamStatistics
 
   def head_to_head(our_team_id)
     games = find_games_by_team_id(our_team_id)
-    head_hash = {}
-    @teams.each do |team|
-      if team[1].team_id != our_team_id
-        this_teams_games = find_games_by_team_id(team[1].team_id, games)
-        this_teams_wins = percent_wins(our_team_id, this_teams_games)
-        head_hash[team[1].team_name] = this_teams_wins
-      end
-    end
-    head_hash
+    win_percent_by_team_hash(our_team_id, games)
   end
 end

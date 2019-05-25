@@ -11,8 +11,8 @@ class LeagueStatisticsTest < Minitest::Test
     @stat_tracker = StatTracker.from_csv(@locations)
   end
 
-  def test_counts_of_teams
-    assert_equal 5, @stat_tracker.teams.length
+  def test_count_of_teams
+    assert_equal 5, @stat_tracker.count_of_teams
   end
 
   def test_best_offense

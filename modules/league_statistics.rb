@@ -36,7 +36,7 @@ module LeagueStatistics
   end
 
   def winningest_team
-    @teams[total_wins.max_by { |k,v| v }.first].team_name
+    @teams[win_percentage.max_by { |k,v| v }.first].team_name
   end
 
   def best_fans
