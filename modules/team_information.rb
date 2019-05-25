@@ -41,4 +41,12 @@ module TeamInformation
     end
     (100.0*wins/games.length).round(2)
   end
+
+  def extreme_scores(team_id, game)
+    if team_id == game.home_team_id
+      game.home_goals
+    else
+      game.away_goals
+    end
+  end  
 end
