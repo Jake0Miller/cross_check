@@ -51,7 +51,8 @@ module TeamInformation
   end
 
   def win_percent(team_id,games,type)
-    percent_wins(team_id,games.find_all {|game| game.type == type})
+    avg = percent_wins(team_id,games.find_all {|game| game.type == type})
+    avg.nan? ? 0.0 : avg
   end
 
   def scored(team_id,games,type)
@@ -74,12 +75,14 @@ module TeamInformation
 
   def avg_scored(team_id,games,type)
     games = games.find_all {|game| game.type == type}
-    (games.sum {|game| our_score(team_id,game)}/games.length.to_f).round(2)
+    total = (games.sum {|game| our_score(team_id,game)}/games.length.to_f).round(2)
+    total.nan? ? 0.0 : total
   end
 
   def avg_against(team_id,games,type)
     games = games.find_all {|game| game.type == type}
-    (games.sum {|game| their_score(team_id,game)}/games.length.to_f).round(2)
+    total = (games.sum {|game| their_score(team_id,game)}/games.length.to_f).round(2)
+    total.nan? ? 0.0 : total
   end
 
   def find_all_wins(team_id)
