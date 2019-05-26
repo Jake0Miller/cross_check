@@ -48,15 +48,39 @@ class TeamInfoTest < Minitest::Test
     assert_equal 0.5, @stat_tracker.percent_wins("6",games_6)
   end
 
-  def test_extreme_scores
+  def test_our_score
     game_1 = @stat_tracker.games.first
-    assert_equal 3, @stat_tracker.extreme_scores("6",game_1)
-    assert_equal 2, @stat_tracker.extreme_scores("3",game_1)
+    assert_equal 3, @stat_tracker.our_score("6",game_1)
+    assert_equal 2, @stat_tracker.our_score("3",game_1)
   end
 
   def test_win_percent_by_team_hash
     expected = {"Lightning" => 0.2, "Rangers" => 0.8}
     actual = @stat_tracker.win_percent_by_team_hash("6",@stat_tracker.games)
     assert_equal expected, actual
+  end
+
+  def test_win_percent
+    assert_equal 0.25, @stat_tracker.win_percent("6",@stat_tracker.games,"P")
+  end
+
+  def test_scored
+    assert_equal 10, @stat_tracker.scored("6",@stat_tracker.games,"P")
+  end
+
+  def test_against
+    assert_equal 12, @stat_tracker.against("6",@stat_tracker.games,"P")
+  end
+
+  def test_their_score
+    assert_equal 2, @stat_tracker.their_score("6",@stat_tracker.games[0])
+  end
+
+  def test_avg_scored
+    assert_equal 2.5, @stat_tracker.avg_scored("6",@stat_tracker.games,"P")
+  end
+
+  def test_avg_against
+    assert_equal 3.0, @stat_tracker.avg_against("6",@stat_tracker.games,"P")
   end
 end

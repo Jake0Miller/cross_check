@@ -25,5 +25,6 @@ class GameTest < MiniTest::Test
     assert_equal "3", @games.first.away_team_id
     assert_equal 3, @games.first.home_goals
     assert_equal 2, @games.first.away_goals
+    assert_equal "P", @games.first.type
   end
 end

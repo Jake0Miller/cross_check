@@ -58,4 +58,30 @@ class TeamStatsTest < Minitest::Test
     expected = {"Lightning" => 0.2, "Rangers" => 0.8}
     assert_equal expected, @stat_tracker.head_to_head("6")
   end
+
+  def test_seasonal_summary
+    expected = { "20122013" =>{
+              regular_season: {win_percentage: 1.0,
+                total_goals_scored: 10,
+                total_goals_against: 5,
+                average_goals_scored: (10.0/3).round(2),
+                average_goals_against: (5.0/3).round(2)},
+              postseason: {win_percentage: 0.5,
+                total_goals_scored: 6,
+                total_goals_against: 5,
+                average_goals_scored: (6.0/2).round(2),
+                average_goals_against: (5.0/2).round(2)}},
+            "20172018" => {
+              regular_season: {win_percentage: (1.0/3).round(2),
+                total_goals_scored: 9,
+                total_goals_against: 10,
+                average_goals_scored: (9.0/3).round(2),
+                average_goals_against: (10.0/3).round(2)},
+              postseason: {win_percentage: 0.0,
+                total_goals_scored: 4,
+                total_goals_against: 7,
+                average_goals_scored: (4.0/2).round(2),
+                average_goals_against: (7.0/2).round(2)}} }
+    assert_equal expected, @stat_tracker.seasonal_summary("6")
+  end
 end
