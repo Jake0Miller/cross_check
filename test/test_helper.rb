@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
@@ -6,5 +8,3 @@ require './lib/stat_tracker'
 require './lib/team'
 require './lib/game'
 require './lib/game_team'
-require 'simplecov'
-SimpleCov.start

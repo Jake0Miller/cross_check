@@ -24,14 +24,14 @@ module GameStatistics
     home_wins = @games.count do |game|
       game.home_goals > game.away_goals
     end
-    (100.0 * home_wins / @games.length).round(2)
+    (1.0 * home_wins / @games.length).round(2)
   end
 
   def percentage_visitor_wins
     away_wins = @games.count do |game|
       game.home_goals < game.away_goals
     end
-    (100.0 * away_wins / @games.length).round(2)
+    (1.0 * away_wins / @games.length).round(2)
   end
 
   def count_of_games_by_season

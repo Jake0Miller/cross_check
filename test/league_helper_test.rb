@@ -54,19 +54,19 @@ class LeagueHelperTest < Minitest::Test
   end
 
   def test_win_percentage
-    assert_in_delta 100.00, @stat_tracker.win_percentage(true, false)["6".to_sym], 0.02
-    assert_in_delta 66.67, @stat_tracker.win_percentage(false, true)["6".to_sym], 0.02
-    assert_in_delta 66.67, @stat_tracker.win_percentage(true, false)["3".to_sym], 0.02
-    assert_equal 0.00, @stat_tracker.win_percentage(false, true)["3".to_sym]
-    assert_equal 50.00, @stat_tracker.win_percentage(true, false)["15".to_sym]
-    assert_equal 50.0, @stat_tracker.win_percentage(false, true)["15".to_sym]
+    assert_in_delta 1.0, @stat_tracker.win_percentage(true, false)["6".to_sym], 0.02
+    assert_in_delta 0.67, @stat_tracker.win_percentage(false, true)["6".to_sym], 0.02
+    assert_in_delta 0.67, @stat_tracker.win_percentage(true, false)["3".to_sym], 0.02
+    assert_equal 0.0, @stat_tracker.win_percentage(false, true)["3".to_sym]
+    assert_equal 0.5, @stat_tracker.win_percentage(true, false)["15".to_sym]
+    assert_equal 0.5, @stat_tracker.win_percentage(false, true)["15".to_sym]
     assert_equal 0.0, @stat_tracker.win_percentage(true, false)["4".to_sym]
-    assert_equal 50.0, @stat_tracker.win_percentage(false, true)["4".to_sym]
+    assert_equal 0.5, @stat_tracker.win_percentage(false, true)["4".to_sym]
   end
 
   def test_home_away_win_percentage_difference
-    assert_in_delta 33.33, @stat_tracker.home_away_win_percent_diff["6".to_sym], 0.02
-    assert_in_delta 66.67, @stat_tracker.home_away_win_percent_diff["3".to_sym], 0.02
+    assert_in_delta 0.33, @stat_tracker.home_away_win_percent_diff["6".to_sym], 0.02
+    assert_in_delta 0.67, @stat_tracker.home_away_win_percent_diff["3".to_sym], 0.02
     assert_equal 0.0, @stat_tracker.home_away_win_percent_diff["15".to_sym]
   end
 end

@@ -2,7 +2,8 @@ require './test/test_helper'
 
 class GameTeamTest < Minitest::Test
   def setup
-    @rows = CSV.read('./data/game_teams_stats_dummy.csv', headers: true, header_converters: CSV::HeaderConverters[:symbol])
+    @rows = CSV.read('./data/game_teams_stats_dummy.csv',
+      headers: true, header_converters: CSV::HeaderConverters[:symbol])
     @game_teams = []
     @rows.each do |row|
       @game_teams << GameTeam.new(row)

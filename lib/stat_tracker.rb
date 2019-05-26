@@ -54,4 +54,3 @@ class StatTracker
     games
   end
 end
-#binding.pry

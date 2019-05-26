@@ -19,9 +19,9 @@ class TeamStatsTest < Minitest::Test
 
   def test_team_info
     expected = {"team_id" => "14",
-                "franchiseId" => "31",
-                "shortName" => "Tampa Bay",
-                "teamName" => "Lightning",
+                "franchise_id" => "31",
+                "short_name" => "Tampa Bay",
+                "team_name" => "Lightning",
                 "abbreviation" => "TBL",
                 "link" => "/api/v1/teams/14"}
 
@@ -38,10 +38,9 @@ class TeamStatsTest < Minitest::Test
     assert_equal "20172018", @stat_tracker.worst_season("6")
   end
 
-  def test_average_win_percentage_for_a_team
-    skip
-    assert_equal 80.0, @stat_tracker.average_win_percentage("6")
-    assert_equal 20.0, @stat_tracker.average_win_percentage("3")
+  def test_average_win_percentage
+    assert_equal 0.5, @stat_tracker.average_win_percentage("6")
+    assert_equal 0.2, @stat_tracker.average_win_percentage("3")
   end
 
   def test_most_goals_scored
@@ -67,9 +66,34 @@ class TeamStatsTest < Minitest::Test
   end
 
   def test_head_to_head
-
-    expected = {"Lightning" => 20.0, "Rangers" => 80.0}
+    expected = {"Lightning" => 0.2, "Rangers" => 0.8}
     assert_equal expected, @stat_tracker.head_to_head("6")
+  end
+
+  def test_seasonal_summary
+    expected = { "20122013" =>{
+              regular_season: {win_percentage: 1.0,
+                total_goals_scored: 10,
+                total_goals_against: 5,
+                average_goals_scored: (10.0/3).round(2),
+                average_goals_against: (5.0/3).round(2)},
+              postseason: {win_percentage: 0.5,
+                total_goals_scored: 6,
+                total_goals_against: 5,
+                average_goals_scored: (6.0/2).round(2),
+                average_goals_against: (5.0/2).round(2)}},
+            "20172018" => {
+              regular_season: {win_percentage: (1.0/3).round(2),
+                total_goals_scored: 9,
+                total_goals_against: 10,
+                average_goals_scored: (9.0/3).round(2),
+                average_goals_against: (10.0/3).round(2)},
+              postseason: {win_percentage: 0.0,
+                total_goals_scored: 4,
+                total_goals_against: 7,
+                average_goals_scored: (4.0/2).round(2),
+                average_goals_against: (7.0/2).round(2)}} }
+    assert_equal expected, @stat_tracker.seasonal_summary("6")
   end
 
   def test_worst_loss
