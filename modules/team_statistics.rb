@@ -1,3 +1,4 @@
+require 'pry'
 module TeamStatistics
 
   def team_info(team_id)
@@ -15,12 +16,21 @@ module TeamStatistics
   end
 
   def average_win_percentage(team_id)
-    percent_wins(team_id,find_games_by_team_id(team_id))
+    team_games = find_games_by_team_id(team_id)
+    wins = 0
+    team_games.each do |game|
+      if team_id == game.home_team_id && home_won?(game)
+        wins += 1
+      elsif team_id == game.away_team_id && away_won?(game)
+        wins += 1
+      end
+    end
+    win_percent = (100.0*wins/team_games.length).round(2)
   end
 
   def most_goals_scored(team_id)
-    highest_score = find_games_by_team_id(team_id).max_by do |game|
-      extreme_scores(team_id, game)
+  highest_score = find_games_by_team_id(team_id).max_by do |game|
+    extreme_scores(team_id, game)
     end
     extreme_scores(team_id, highest_score)
   end
@@ -56,6 +66,25 @@ module TeamStatistics
     end
     head_hash
   end
+
+  def worst_loss(team_id)
+    games = find_games_by_team_id(team_id).map do |game|
+      #take out map...
+      #binding.pry
+      if !won_at_home?(team_id, game) && !won_away?(team_id, game)
+        #binding.pry
+        (game.home_goals - game.away_goals).abs
+      end
+    end
+
+    not_nil_games = games.find_all do |game|
+      !game.nil?
+    end
+
+    not_nil_games.max_by do |diff|
+      diff #take out this line and switch to .max
+    end 
+  end 
 
   def biggest_team_blowout(team_id)
     diff = find_games_by_team_id(team_id, games).map do |game|
