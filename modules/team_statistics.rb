@@ -69,12 +69,20 @@ module TeamStatistics
 
   def worst_loss(team_id)
     games = find_games_by_team_id(team_id).map do |game|
-      games_lost(games) = games.find_all do |game|
-        game.away_team_id == @team_id && game.outcome.include?("home") || game.home_team_id == @team_id && game.outcome.include?("away")
-      end
-    game_with_worst_loss = games_lost.max_by do |game|
-      binding.pry
-        end
+      #take out map...
+      #binding.pry
+      if !won_at_home?(team_id, game) && !won_away?(team_id, game)
+        #binding.pry
+        (game.home_goals - game.away_goals).abs
       end
     end
+
+    not_nil_games = games.find_all do |game|
+      !game.nil?
+    end
+
+    not_nil_games.max_by do |diff|
+      diff #take out this line and switch to .max
+    end
   end
+end
