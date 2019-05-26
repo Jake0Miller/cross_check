@@ -15,16 +15,7 @@ module TeamStatistics
   end
 
   def average_win_percentage(team_id)
-    team_games = find_games_by_team_id(team_id)
-    wins = 0
-    team_games.each do |game|
-      if team_id == game.home_team_id && home_won?(game)
-        wins += 1
-      elsif team_id == game.away_team_id && away_won?(game)
-        wins += 1
-      end
-    end
-    win_percent = (100.0*wins/team_games.length).round(2)
+     percent_wins(team_id,find_games_by_team_id(team_id))
   end
 
   def most_goals_scored(team_id)
@@ -95,8 +86,8 @@ module TeamStatistics
 
     not_nil_games.max_by do |diff|
       diff #take out this line and switch to .max
-    end 
-  end 
+    end
+  end
 
   def biggest_team_blowout(team_id)
     diff = find_games_by_team_id(team_id, games).map do |game|
