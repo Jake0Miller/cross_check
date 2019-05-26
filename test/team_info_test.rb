@@ -83,4 +83,14 @@ class TeamInfoTest < Minitest::Test
   def test_avg_against
     assert_equal 3.0, @stat_tracker.avg_against("6",@stat_tracker.games,"P")
   end
+
+  def test_find_all_wins
+    assert_equal [1], @stat_tracker.find_all_wins("3")
+    assert_equal [1,3,1,2,4], @stat_tracker.find_all_wins("6")
+  end
+
+  def test_find_all_losses
+    assert_equal [1,3,1,2], @stat_tracker.find_all_losses("3")
+    assert_equal [4], @stat_tracker.find_all_losses("14")
+  end
 end
