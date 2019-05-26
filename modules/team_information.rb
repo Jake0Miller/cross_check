@@ -21,7 +21,7 @@ module TeamInformation
 
   def win_percent_by_season(team_id)
     games_by_season(team_id).each_with_object({}) do |season,hash|
-      hash[season.first] = percent_wins(team_id,season.last)
+      hash[season[0]] = percent_wins(team_id,season[1])
     end
   end
 

@@ -1,13 +1,13 @@
 module SeasonHelper
 
-  def games_by_season(season_id)
+  def all_games_by_season(season_id)
     @games.find_all do |game|
       game.season == season_id
     end
   end
 
   def season_games_by_type(season_id)
-    games_by_season(season_id).group_by do |game|
+    all_games_by_season(season_id).group_by do |game|
       game.type
     end
   end
