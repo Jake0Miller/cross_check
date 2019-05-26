@@ -81,4 +81,24 @@ module TeamInformation
     games = games.find_all {|game| game.type == type}
     (games.sum {|game| their_score(team_id,game)}/games.length.to_f).round(2)
   end
+
+  def find_all_wins(team_id)
+    find_games_by_team_id(team_id, games).map do |game|
+      if won_at_home?(team_id,game) || won_away?(team_id,game)
+        (game.home_goals - game.away_goals).abs
+      end
+    end.find_all do |game|
+      !game.nil?
+    end
+  end
+
+  def find_all_losses(team_id)
+    find_games_by_team_id(team_id).map do |game|
+      if !won_at_home?(team_id, game) && !won_away?(team_id, game)
+        (game.home_goals - game.away_goals).abs
+      end
+    end.find_all do |game|
+      !game.nil?
+    end
+  end
 end
