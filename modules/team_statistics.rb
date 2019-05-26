@@ -18,9 +18,9 @@ module TeamStatistics
     team_games = find_games_by_team_id(team_id)
     wins = 0
     team_games.each do |game|
-      if team_id == game.home_team_id && home_won?(game)
+      if team_id == game.home_team_id && won_at_home?(game)
         wins += 1
-      elsif team_id == game.away_team_id && away_won?(game)
+      elsif team_id == game.away_team_id && won_away?(game)
         wins += 1
       end
     end
@@ -95,8 +95,8 @@ module TeamStatistics
 
     not_nil_games.max_by do |diff|
       diff #take out this line and switch to .max
-    end 
-  end 
+    end
+  end
 
   def biggest_team_blowout(team_id)
     diff = find_games_by_team_id(team_id, games).map do |game|
