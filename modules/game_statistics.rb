@@ -27,7 +27,7 @@ module GameStatistics
     (100.0 * home_wins / @games.length).round(2)
   end
 
-  def percentage_away_wins
+  def percentage_visitor_wins
     away_wins = @games.count do |game|
       game.home_goals < game.away_goals
     end

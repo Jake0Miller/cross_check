@@ -76,6 +76,11 @@ class TeamStatsTest < Minitest::Test
     assert_equal 3, @stat_tracker.worst_loss("6")
     assert_equal 3, @stat_tracker.worst_loss("3")
     assert_equal 4, @stat_tracker.worst_loss("14")
+  end 
+  
+  def test_biggest_team_blowout
+    assert_equal 4, @stat_tracker.biggest_team_blowout("6")
+    assert_equal 3, @stat_tracker.biggest_team_blowout("14")
+    assert_equal 1, @stat_tracker.biggest_team_blowout("3")
   end
 end
-#binding.pry

@@ -4,6 +4,7 @@ require_relative '../lib/game'
 require_relative '../lib/game_team'
 require_relative '../modules/game_statistics'
 require_relative '../modules/league_statistics'
+require_relative '../modules/league_helper'
 require_relative '../modules/team_statistics'
 require_relative '../modules/team_information'
 
@@ -12,6 +13,7 @@ class StatTracker
   include TeamStatistics
   include TeamInformation
   include LeagueStatistics
+  include LeagueHelper
 
   attr_reader :games, :teams, :game_teams
 
