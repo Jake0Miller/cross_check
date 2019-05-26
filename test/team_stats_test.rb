@@ -1,7 +1,4 @@
 require './test/test_helper'
-require './modules/team_information'
-require './modules/team_statistics'
-require 'pry'
 
 class TeamStatsTest < Minitest::Test
   include TeamStatistics
