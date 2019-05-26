@@ -56,4 +56,18 @@ module TeamStatistics
     end
     head_hash
   end
+
+  def biggest_team_blowout(team_id)
+    diff = find_games_by_team_id(team_id, games).map do |game|
+        if won_at_home?(team_id,game) || won_away?(team_id,game)
+            (game.home_goals - game.away_goals).abs
+        end
+      end
+    not_nil = diff.find_all do |game|
+      !game.nil?
+    end
+    not_nil.max_by do |biggest_diff|
+      biggest_diff
+    end
+  end
 end

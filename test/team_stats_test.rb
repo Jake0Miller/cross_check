@@ -58,4 +58,10 @@ class TeamStatsTest < Minitest::Test
     expected = {"Lightning" => 20.0, "Rangers" => 80.0}
     assert_equal expected, @stat_tracker.head_to_head("6")
   end
+
+  def test_biggest_team_blowout
+    assert_equal 4, @stat_tracker.biggest_team_blowout("6")
+    assert_equal 3, @stat_tracker.biggest_team_blowout("14")
+    assert_equal 1, @stat_tracker.biggest_team_blowout("3")
+  end
 end
