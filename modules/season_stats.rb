@@ -26,31 +26,14 @@ module SeasonStatistics
   end
 
   def winningest_coach(season_id)
-    game_teams_by_season = all_games_by_season(season_id).map do |game|
-      get_game_by_season_and_game_id(season_id, game.game_id)
-    end.flatten
-    coach_wins = Hash.new(0)
-    game_teams_by_season.each do |game|
-      if game.head_coach && game.won == "TRUE"
-        coach_wins[game.head_coach] += 1
-      end
-    end
+    coach_wins = get_coach_win_count(season_id)
     coach_wins.max_by do |coach, wins|
        wins
     end.first
   end
 
   def worst_coach(season_id)
-    game_teams_by_season = all_games_by_season(season_id).map do |game|
-      get_game_by_season_and_game_id(season_id, game.game_id)
-    end.flatten
-    coach_wins = Hash.new(0)
-    game_teams_by_season.each do |game|
-
-      if game.head_coach && game.won == "TRUE"
-        coach_wins[game.head_coach] += 1
-      end
-    end
+    coach_wins = get_coach_win_count(season_id)
     coach_wins.min_by do |coach, wins|
        wins
     end.first
