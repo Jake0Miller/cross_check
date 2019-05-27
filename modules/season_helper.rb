@@ -68,4 +68,10 @@ module SeasonHelper
     end
     reg_wins
   end
+
+  def get_game_by_season_and_game_id(season_id, game_id)
+    @game_teams.find_all do |game|
+      game.game_id == game_id
+    end
+  end
 end
