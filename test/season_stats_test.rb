@@ -1,6 +1,8 @@
 require './test/test_helper'
 
 class SeasonStatisticsTest < MiniTest::Test
+  include SeasonStatistics
+
   def setup
     @game_path = './data/game_tay.csv'
     @team_path = './data/team_tay.csv'
@@ -19,6 +21,16 @@ class SeasonStatisticsTest < MiniTest::Test
   def test_biggest_surprise
     assert_equal "Rangers", @stat_tracker.biggest_surprise('20122013')
     assert_equal "Lightning", @stat_tracker.biggest_surprise('20172018')
+  end
+
+  def test_it_gets_winningest_coach
+    assert_equal "Claude Julien", @stat_tracker.winningest_coach('20122013')
+    assert_equal "Jon Cooper", @stat_tracker.winningest_coach('20172018')
+  end
+
+  def test_it_gets_worst_coach
+    assert_equal "John Tortorella", @stat_tracker.worst_coach('20122013')
+    assert_equal "Bruce Cassidy", @stat_tracker.worst_coach('20172018')
   end
 
 end
