@@ -1,6 +1,8 @@
 require './test/test_helper'
 
 class SeasonStatisticsTest < MiniTest::Test
+  include SeasonStatistics
+
   def setup
     @game_path = './data/game_tay.csv'
     @team_path = './data/team_tay.csv'
@@ -34,5 +36,17 @@ class SeasonStatisticsTest < MiniTest::Test
   def test_power_play_goal_percentage
     assert_equal 0.21, @stat_tracker.power_play_goal_percentage("20122013")
     assert_equal 0.32, @stat_tracker.power_play_goal_percentage("20172018")
+  end
+
+  def test_it_gets_winningest_coach
+    skip
+    assert_equal "Claude Julien", @stat_tracker.winningest_coach('20122013')
+    assert_equal "Jon Cooper", @stat_tracker.winningest_coach('20172018')
+  end
+
+  def test_it_gets_worst_coach
+    skip
+    assert_equal "John Tortorella", @stat_tracker.worst_coach('20122013')
+    assert_equal "Bruce Cassidy", @stat_tracker.worst_coach('20172018')
   end
 end

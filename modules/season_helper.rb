@@ -60,4 +60,26 @@ module SeasonHelper
       hash[team[0]] = team[1].sum {|game| game.hits}
     end
   end
+
+  def get_game_by_season_and_game_id(season_id, game_id)
+    @game_teams.find_all do |game|
+      game.game_id == game_id
+    end
+  end
+
+  # def game_teams_by_season(season_id)
+  #   all_games_by_season(season_id).map do |game|
+  #     get_game_by_season_and_game_id(season_id, game.game_id)
+  #   end.flatten
+  # end
+
+  def get_coach_win_count(season_id)
+    coach_wins = Hash.new(0)
+    game_teams_by_season(season_id).each do |game|
+      if game.head_coach && game.won == "TRUE"
+        coach_wins[game.head_coach] += 1
+      end
+    end
+    coach_wins
+  end
 end
