@@ -21,7 +21,7 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_get_game_teams
-    assert_equal 2, StatTracker.get_game_teams(@game_teams_path).size
+    assert_equal 2, StatTracker.get_game_teams(@game_teams_path).values[0].size
   end
 
   def test_get_teams
@@ -36,7 +36,8 @@ class StatTrackerTest < Minitest::Test
 
   def test_game_teams_are_game_objects
     @stat_tracker.game_teams.each do |game_team|
-      assert_instance_of GameTeam, game_team
+      assert_instance_of GameTeam, game_team[1].values[0]
+      assert_instance_of GameTeam, game_team[1].values[1]
     end
   end
 
@@ -49,6 +50,6 @@ class StatTrackerTest < Minitest::Test
   def test_from_csv
     assert_equal 5, @stat_tracker.games.size
     assert_equal 6, @stat_tracker.teams.size
-    assert_equal 2, @stat_tracker.game_teams.size
+    assert_equal 2, @stat_tracker.game_teams.values[0].size
   end
 end

@@ -21,4 +21,18 @@ class SeasonStatisticsTest < MiniTest::Test
     assert_equal "Lightning", @stat_tracker.biggest_surprise('20172018')
   end
 
+  def test_most_hits
+    assert_equal "Rangers", @stat_tracker.most_hits("20122013")
+    assert_equal "Lightning", @stat_tracker.most_hits("20172018")
+  end
+
+  def test_fewest_hits
+    assert_equal "Bruins", @stat_tracker.fewest_hits("20122013")
+    assert_equal "Bruins", @stat_tracker.fewest_hits("20172018")
+  end
+
+  def test_power_play_goal_percentage
+    assert_equal 0.21, @stat_tracker.power_play_goal_percentage("20122013")
+    assert_equal 0.32, @stat_tracker.power_play_goal_percentage("20172018")
+  end
 end

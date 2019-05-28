@@ -17,7 +17,7 @@ class StatTracker
   include LeagueStatistics
   include LeagueHelper
   include SeasonStatistics
-  include SeasonHelper 
+  include SeasonHelper
 
   attr_reader :games, :teams, :game_teams
 
@@ -35,9 +35,10 @@ class StatTracker
   end
 
   def self.get_game_teams(path)
-    game_teams = []
+    game_teams = {}
     CSV.foreach(path, headers: true, header_converters: CSV::HeaderConverters[:symbol]) do |row|
-      game_teams << GameTeam.new(row)
+      game_teams[row[0].to_sym] ||= {}
+      game_teams[row[0].to_sym][row[1]] = GameTeam.new(row)
     end
     game_teams
   end
