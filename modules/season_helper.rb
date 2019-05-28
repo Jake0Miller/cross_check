@@ -38,9 +38,10 @@ module SeasonHelper
   def post_reg_difference(season_id)
     reg_wins = wins_by_team(season_id,'R')
     post_wins = wins_by_team(season_id,'P')
-    reg_wins.merge(post_wins) do |team, reg, post|
-      post - reg
+    post_wins.each do |team|
+      post_wins[team[0]] = team[1] - reg_wins[team[0]]
     end
+    post_wins
   end
 
   def game_teams_by_season(season_id)
@@ -67,29 +68,20 @@ module SeasonHelper
     end
   end
 
-  # def game_teams_by_season(season_id)
-  #   all_games_by_season(season_id).map do |game|
-  #     get_game_by_season_and_game_id(season_id, game.game_id)
-  #   end.flatten
-  # end
-
-  def coach_wins(season_id)
+  def coach_info(season_id)
     coach_wins = Hash.new(0)
-    coach_game_count = Hash.new(0)
+    coach_games = Hash.new(0)
     game_teams_by_season(season_id).each do |game|
-      coach_game_count[game.head_coach] += 1
+      coach_games[game.head_coach] += 1
       coach_wins[game.head_coach] += 1 if game.won == "TRUE"
     end
-    [coach_wins, coach_game_count]
+    [coach_wins, coach_games]
   end
 
   def coach_win_percentage(season_id)
-    coach_wins, coach_game_count = coach_wins(season_id)
-    coach_win_percentages = Hash.new(0)
-
-    coach_wins.each do |coach, wins|
-      coach_win_percentages[coach] = (wins.to_f / coach_game_count[coach])
+    coach_wins, coach_games = coach_info(season_id)
+    test = coach_games.each_with_object({}) do |coach_game, hash|
+      hash[coach_game[0]] = (coach_wins[coach_game[0]].to_f / coach_game[1])
     end
-    coach_win_percentages
   end
 end

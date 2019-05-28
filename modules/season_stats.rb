@@ -6,12 +6,23 @@ module SeasonStatistics
     @teams[most_improved[0].to_sym].team_name
   end
 
-  # check if there are teams in the pre that don't make post
   def biggest_surprise(season_id)
     most_improved = post_reg_difference(season_id).max do |win_a, win_b|
       win_a[1] <=> win_b[1]
     end
     @teams[most_improved[0].to_sym].team_name
+  end
+
+  def winningest_coach(season_id)
+    coach_win_percentage(season_id).max do |coach_win_a,coach_win_b|
+      coach_win_a[1] <=> coach_win_b[1]
+    end[0]
+  end
+
+  def worst_coach(season_id)
+    coach_win_percentage(season_id).min do |coach_win_a,coach_win_b|
+      coach_win_a[1] <=> coach_win_b[1]
+    end[0]
   end
 
   def most_hits(season_id)
@@ -33,17 +44,5 @@ module SeasonStatistics
     power_goals = game_teams.sum {|game_team| game_team.power_play_goals}
     power_opps = game_teams.sum {|game_team| game_team.power_play_opportunities}
     (power_goals.to_f / power_opps).round(2)
-  end
-
-  def winningest_coach(season_id)
-    coach_win_percentage(season_id).max_by do |coach, win_percent|
-      win_percent
-    end.first
-  end
-
-  def worst_coach(season_id)
-    coach_win_percentage(season_id).min_by do |coach, win_percent|
-       win_percent
-    end.first
   end
 end

@@ -23,6 +23,16 @@ class SeasonStatisticsTest < MiniTest::Test
     assert_equal "Lightning", @stat_tracker.biggest_surprise('20172018')
   end
 
+  def test_it_gets_winningest_coach
+    assert_equal "Claude Julien", @stat_tracker.winningest_coach('20122013')
+    assert_equal "Jon Cooper", @stat_tracker.winningest_coach('20172018')
+  end
+
+  def test_it_gets_worst_coach
+    assert_equal "John Tortorella", @stat_tracker.worst_coach('20122013')
+    assert_equal "Bruce Cassidy", @stat_tracker.worst_coach('20172018')
+  end
+
   def test_most_hits
     assert_equal "Rangers", @stat_tracker.most_hits("20122013")
     assert_equal "Lightning", @stat_tracker.most_hits("20172018")
