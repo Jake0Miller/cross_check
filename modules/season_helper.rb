@@ -81,21 +81,26 @@ module SeasonHelper
     end.flatten
   end
 
-  def get_coach_win_percentage(season_id)
+  def coach_wins(season_id)
     coach_wins = Hash.new(0)
-    coach_win_percentages = Hash.new(0)
-    num_of_games_coach_played_in = Hash.new(0)
+    coach_game_count = Hash.new(0)
 
     game_teams_by_season(season_id).each do |game|
-      num_of_games_coach_played_in[game.head_coach] += 1
+      coach_game_count[game.head_coach] += 1
 
-      if game.head_coach && game.won == "TRUE"
+      if game.won == "TRUE"
         coach_wins[game.head_coach] += 1
       end
     end
+    [coach_wins, coach_game_count]
+  end
+
+  def coach_win_percentage(season_id)
+    coach_wins, coach_game_count = coach_wins(season_id)
+    coach_win_percentages = Hash.new(0)
 
     coach_wins.each do |coach, wins|
-      coach_win_percentages[coach] = (wins.to_f / num_of_games_coach_played_in[coach]) * 100
+      coach_win_percentages[coach] = (wins.to_f / coach_game_count[coach])
     end
     coach_win_percentages
   end

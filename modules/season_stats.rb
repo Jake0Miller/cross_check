@@ -26,15 +26,13 @@ module SeasonStatistics
   end
 
   def winningest_coach(season_id)
-    coach_win_percentage = get_coach_win_percentage(season_id)
-    coach_win_percentage.max_by do |coach, win_percent|
+    coach_win_percentage(season_id).max_by do |coach, win_percent|
       win_percent
     end.first
   end
 
   def worst_coach(season_id)
-    coach_win_percentage = get_coach_win_percentage(season_id)
-    coach_win_percentage.min_by do |coach, win_percent|
+    coach_win_percentage(season_id).min_by do |coach, win_percent|
        win_percent
     end.first
   end
