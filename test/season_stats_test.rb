@@ -33,6 +33,16 @@ class SeasonStatisticsTest < MiniTest::Test
     assert_equal "Bruce Cassidy", @stat_tracker.worst_coach('20172018')
   end
 
+  def test_most_accurate_team
+    assert_equal "Bruins", @stat_tracker.most_accurate_team("20122013")
+    assert_equal "Lightning", @stat_tracker.most_accurate_team("20172018")
+  end
+
+  def test_least_accurate_team
+    assert_equal "Rangers", @stat_tracker.least_accurate_team("20122013")
+    assert_equal "Bruins", @stat_tracker.least_accurate_team("20172018")
+  end
+
   def test_most_hits
     assert_equal "Rangers", @stat_tracker.most_hits("20122013")
     assert_equal "Lightning", @stat_tracker.most_hits("20172018")

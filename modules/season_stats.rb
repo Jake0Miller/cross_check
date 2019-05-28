@@ -1,3 +1,4 @@
+require 'pry'
 module SeasonStatistics
   def biggest_bust(season_id)
     most_improved = post_reg_difference(season_id).min do |win_a, win_b|
@@ -11,6 +12,22 @@ module SeasonStatistics
       win_a[1] <=> win_b[1]
     end
     @teams[most_improved[0].to_sym].team_name
+  end
+
+  def most_accurate_team(season_id)
+    games = all_games_by_season(season_id)
+    team_data = accurate_team(games).max_by do |game|
+      game[1][:goals]/game[1][:shots].to_f
+    end
+    @teams[team_data[0].to_sym].team_name
+  end
+
+  def least_accurate_team(season_id)
+    games = all_games_by_season(season_id)
+    team_data = accurate_team(games).min_by do |game|
+      game[1][:goals]/game[1][:shots].to_f
+    end
+    @teams[team_data[0].to_sym].team_name
   end
 
   def winningest_coach(season_id)
