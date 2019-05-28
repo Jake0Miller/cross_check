@@ -38,4 +38,16 @@ module SeasonStatistics
     end
     @teams[team_data[0].to_sym].team_name
   end
+  
+  def winningest_coach(season_id)
+    coach_win_percentage(season_id).max_by do |coach, win_percent|
+      win_percent
+    end.first
+  end
+
+  def worst_coach(season_id)
+    coach_win_percentage(season_id).min_by do |coach, win_percent|
+       win_percent
+    end.first
+  end
 end
