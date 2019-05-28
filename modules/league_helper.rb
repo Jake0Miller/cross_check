@@ -1,15 +1,15 @@
 module LeagueHelper
   def total_goals(home=true, away=true)
     @games.each_with_object(Hash.new(0)) do |game,hash|
-      hash[game.away_team_id.to_sym] += game.away_goals.to_i if away
-      hash[game.home_team_id.to_sym] += game.home_goals.to_i if home
+      hash[game[1].away_team_id.to_sym] += game[1].away_goals.to_i if away
+      hash[game[1].home_team_id.to_sym] += game[1].home_goals.to_i if home
     end
   end
 
   def total_games(home=true, away=true)
     @games.each_with_object(Hash.new(0)) do |game,hash|
-      hash[game.away_team_id.to_sym] += 1 if away
-      hash[game.home_team_id.to_sym] += 1 if home
+      hash[game[1].away_team_id.to_sym] += 1 if away
+      hash[game[1].home_team_id.to_sym] += 1 if home
     end
   end
 
@@ -23,8 +23,8 @@ module LeagueHelper
 
   def total_goals_allowed
     @games.each_with_object(Hash.new(0)) do |game,hash|
-      hash[game.away_team_id.to_sym] += game.home_goals.to_i
-      hash[game.home_team_id.to_sym] += game.away_goals.to_i
+      hash[game[1].away_team_id.to_sym] += game[1].home_goals.to_i
+      hash[game[1].home_team_id.to_sym] += game[1].away_goals.to_i
     end
   end
 
@@ -39,12 +39,12 @@ module LeagueHelper
 
   def total_wins(home = true, away = true)
     @games.each_with_object({}) do |game,hash|
-      hash[game.away_team_id.to_sym] ||= 0
-      hash[game.home_team_id.to_sym] ||= 0
-      if game.away_goals > game.home_goals && away
-        hash[game.away_team_id.to_sym] += 1
-      elsif game.away_goals < game.home_goals && home
-        hash[game.home_team_id.to_sym] += 1
+      hash[game[1].away_team_id.to_sym] ||= 0
+      hash[game[1].home_team_id.to_sym] ||= 0
+      if game[1].away_goals > game[1].home_goals && away
+        hash[game[1].away_team_id.to_sym] += 1
+      elsif game[1].away_goals < game[1].home_goals && home
+        hash[game[1].home_team_id.to_sym] += 1
       end
     end
   end

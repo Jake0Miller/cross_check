@@ -20,16 +20,16 @@ module TeamStatistics
 
   def most_goals_scored(team_id)
     highest_score = find_games_by_team_id(team_id).max_by do |game|
-      our_score(team_id, game)
+      our_score(team_id, game[1])
     end
-    our_score(team_id, highest_score)
+    our_score(team_id, highest_score[1])
   end
 
   def fewest_goals_scored(team_id)
     lowest_score = find_games_by_team_id(team_id).min_by do |game|
-      our_score(team_id, game)
+      our_score(team_id, game[1])
     end
-    our_score(team_id, lowest_score)
+    our_score(team_id, lowest_score[1])
   end
 
   def favorite_opponent(our_team_id)
@@ -61,7 +61,7 @@ module TeamStatistics
   end
 
   def seasonal_summary(id)
-    games = find_games_by_team_id(id).group_by {|game| game.season}
+    games = find_games_by_team_id(id).group_by {|game| game[1].season}
     games.each_with_object({}) do |s,hash|
       hash[s[0]] = {regular_season: {}, postseason: {}}
 

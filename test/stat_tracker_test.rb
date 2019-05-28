@@ -30,7 +30,7 @@ class StatTrackerTest < Minitest::Test
 
   def test_games_are_game_objects
     @stat_tracker.games.each do |game|
-      assert_instance_of Game, game
+      assert_instance_of Game, game[1]
     end
   end
 

@@ -12,14 +12,21 @@ class SeasonHelperTest < MiniTest::Test
   end
 
   def test_all_games_by_season
-    expected = @stat_tracker.games[0..4]
+    expected = [["2012030221".to_sym, @stat_tracker.games["2012030221".to_sym]],
+                ["2012030222".to_sym, @stat_tracker.games["2012030222".to_sym]],
+                ["2012030223".to_sym, @stat_tracker.games["2012030223".to_sym]],
+                ["2012030224".to_sym, @stat_tracker.games["2012030224".to_sym]],
+                ["2012030225".to_sym, @stat_tracker.games["2012030225".to_sym]]]
     actual = @stat_tracker.all_games_by_season("20122013")
     assert_equal expected, actual
   end
 
   def test_season_games_by_type
-    expected = {'R' => @stat_tracker.games[0..2],
-          'P' => @stat_tracker.games[3..4]}
+    expected = {'R' => [["2012030221".to_sym, @stat_tracker.games["2012030221".to_sym]],
+                        ["2012030222".to_sym, @stat_tracker.games["2012030222".to_sym]],
+                        ["2012030223".to_sym, @stat_tracker.games["2012030223".to_sym]]],
+                'P' => [["2012030224".to_sym, @stat_tracker.games["2012030224".to_sym]],
+                        ["2012030225".to_sym, @stat_tracker.games["2012030225".to_sym]]]}
     actual = @stat_tracker.season_games_by_type("20122013")
     assert_equal expected, actual
   end

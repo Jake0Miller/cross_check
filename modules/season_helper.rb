@@ -1,19 +1,19 @@
 module SeasonHelper
   def all_games_by_season(season_id)
     @games.find_all do |game|
-      game.season == season_id
+      game[1].season == season_id
     end
   end
 
   def season_games_by_type(season_id)
     all_games_by_season(season_id).group_by do |game|
-      game.type
+      game[1].type
     end
   end
 
   def season_game_teams(season_id,type)
     season_games_by_type(season_id)[type].each_with_object([]) do |game,array|
-      array.push(@game_teams[game.game_id.to_sym])
+      array.push(@game_teams[game[0]])
     end
   end
 
@@ -45,7 +45,7 @@ module SeasonHelper
 
   def game_teams_by_season(season_id)
     all_games_by_season(season_id).each_with_object([]) do |game,array|
-      array.push(@game_teams[game.game_id.to_sym].values)
+      array.push(@game_teams[game[0]].values)
     end.flatten
   end
 

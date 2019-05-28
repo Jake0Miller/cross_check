@@ -1,13 +1,13 @@
 module TeamInformation
   def find_games_by_team_id(team_id, games = @games)
     games.find_all do |game|
-      game.away_team_id == team_id || game.home_team_id == team_id
+      game[1].away_team_id == team_id || game[1].home_team_id == team_id
     end
   end
 
   def games_by_season(team_id)
     find_games_by_team_id(team_id).group_by do |game|
-      game.season
+      game[1].season
     end
   end
 
@@ -27,9 +27,9 @@ module TeamInformation
 
   def percent_wins(team_id,games)
     wins = games.count do |game|
-      won_at_home?(team_id,game) || won_away?(team_id,game)
+      won_at_home?(team_id,game[1]) || won_away?(team_id,game[1])
     end
-    (1.0*wins/games.length).round(2)
+    (wins.to_f/games.length).round(2)
   end
 
   def our_score(team_id, game)
@@ -51,18 +51,18 @@ module TeamInformation
   end
 
   def win_percent(team_id,games,type)
-    avg = percent_wins(team_id,games.find_all {|game| game.type == type})
+    avg = percent_wins(team_id,games.find_all {|game| game[1].type == type})
     avg.nan? ? 0.0 : avg
   end
 
   def scored(team_id,games,type)
-    games = games.find_all {|game| game.type == type}
-    games.sum {|game| our_score(team_id,game)}
+    games = games.find_all {|game| game[1].type == type}
+    games.sum {|game| our_score(team_id,game[1])}
   end
 
   def against(team_id,games,type)
-    games = games.find_all {|game| game.type == type}
-    games.sum {|game| their_score(team_id,game)}
+    games = games.find_all {|game| game[1].type == type}
+    games.sum {|game| their_score(team_id,game[1])}
   end
 
   def their_score(team_id, game)
@@ -74,21 +74,21 @@ module TeamInformation
   end
 
   def avg_scored(team_id,games,type)
-    games = games.find_all {|game| game.type == type}
-    total = (games.sum {|game| our_score(team_id,game)}/games.length.to_f).round(2)
+    games = games.find_all {|game| game[1].type == type}
+    total = (games.sum {|game| our_score(team_id,game[1])}/games.length.to_f).round(2)
     total.nan? ? 0.0 : total
   end
 
   def avg_against(team_id,games,type)
-    games = games.find_all {|game| game.type == type}
-    total = (games.sum {|game| their_score(team_id,game)}/games.length.to_f).round(2)
+    games = games.find_all {|game| game[1].type == type}
+    total = (games.sum {|game| their_score(team_id,game[1])}/games.length.to_f).round(2)
     total.nan? ? 0.0 : total
   end
 
   def find_all_wins(team_id)
     find_games_by_team_id(team_id, games).map do |game|
-      if won_at_home?(team_id,game) || won_away?(team_id,game)
-        (game.home_goals - game.away_goals).abs
+      if won_at_home?(team_id,game[1]) || won_away?(team_id,game[1])
+        (game[1].home_goals - game[1].away_goals).abs
       end
     end.find_all do |game|
       !game.nil?
@@ -97,8 +97,8 @@ module TeamInformation
 
   def find_all_losses(team_id)
     find_games_by_team_id(team_id).map do |game|
-      if !won_at_home?(team_id, game) && !won_away?(team_id, game)
-        (game.home_goals - game.away_goals).abs
+      if !won_at_home?(team_id, game[1]) && !won_away?(team_id, game[1])
+        (game[1].home_goals - game[1].away_goals).abs
       end
     end.find_all do |game|
       !game.nil?

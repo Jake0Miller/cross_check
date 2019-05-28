@@ -3,6 +3,7 @@ SimpleCov.start
 require 'pry'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 require 'csv'
 require './lib/stat_tracker'
 require './lib/team'
