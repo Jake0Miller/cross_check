@@ -34,4 +34,16 @@ module SeasonStatistics
     power_opps = game_teams.sum {|game_team| game_team.power_play_opportunities}
     (power_goals.to_f / power_opps).round(2)
   end
+
+  def winningest_coach(season_id)
+    coach_win_percentage(season_id).max_by do |coach, win_percent|
+      win_percent
+    end.first
+  end
+
+  def worst_coach(season_id)
+    coach_win_percentage(season_id).min_by do |coach, win_percent|
+       win_percent
+    end.first
+  end
 end
