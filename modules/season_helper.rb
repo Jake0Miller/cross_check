@@ -69,6 +69,46 @@ module SeasonHelper
     reg_wins
   end
 
+  def game_shots
+    @game_teams.map do |game_team|
+      game_team.game_info[:shots]
+    end
+  end
+
+  def game_goals
+    @game_teams.map do |game_team|
+      game_team.game_info[:goals]
+    end
+  end
+
+  def season_games(season_id)
+    all_games_by_season(season_id).group_by do |game|
+      game.season
+    end
+  end
+
+  def accurate_team(games)
+    team_data = Hash.new
+    games.each do |game|
+      away_team = game.away_team_id
+      home_team = game.home_team_id
+
+      away_team_game = @game_teams.find do |game_team|
+        game.game_id == game_team.game_id && away_team == game_team.team_id
+      end
+      home_team_game = @game_teams.find do |game_team|
+        game.game_id == game_team.game_id && home_team == game_team.team_id
+      end
+      team_data[home_team] ||= {shots: 0, goals: 0}
+      team_data[away_team] ||= {shots: 0, goals: 0}
+      team_data[home_team][:shots] += home_team_game.shots.to_i
+      team_data[home_team][:goals] += home_team_game.goals.to_i
+      team_data[away_team][:shots] += away_team_game.shots.to_i
+      team_data[away_team][:goals] += away_team_game.goals.to_i
+    end
+    team_data
+  end
+  
   def get_game_by_season_and_game_id(season_id, game_id)
     @game_teams.find_all do |game|
       game.game_id == game_id
