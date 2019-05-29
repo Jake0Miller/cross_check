@@ -14,22 +14,6 @@ module SeasonStatistics
     @teams[most_improved[0].to_sym].team_name
   end
 
-  def most_accurate_team(season_id)
-    games = all_games_by_season(season_id)
-    team_data = accurate_team(games).max_by do |game|
-      game[1][:goals]/game[1][:shots].to_f
-    end
-    @teams[team_data[0].to_sym].team_name
-  end
-
-  def least_accurate_team(season_id)
-    games = all_games_by_season(season_id)
-    team_data = accurate_team(games).min_by do |game|
-      game[1][:goals]/game[1][:shots].to_f
-    end
-    @teams[team_data[0].to_sym].team_name
-  end
-
   def winningest_coach(season_id)
     coach_win_percentage(season_id).max do |coach_win_a,coach_win_b|
       coach_win_a[1] <=> coach_win_b[1]
@@ -40,6 +24,20 @@ module SeasonStatistics
     coach_win_percentage(season_id).min do |coach_win_a,coach_win_b|
       coach_win_a[1] <=> coach_win_b[1]
     end[0]
+  end
+
+  def most_accurate_team(season_id)
+    team_data = accurate_team(season_id).max do |a, b|
+      a[1][:goals]/a[1][:shots].to_f <=> b[1][:goals]/b[1][:shots].to_f
+    end
+    @teams[team_data[0].to_sym].team_name
+  end
+
+  def least_accurate_team(season_id)
+    team_data = accurate_team(season_id).min do |a, b|
+      a[1][:goals]/a[1][:shots].to_f <=> b[1][:goals]/b[1][:shots].to_f
+    end
+    @teams[team_data[0].to_sym].team_name
   end
 
   def most_hits(season_id)

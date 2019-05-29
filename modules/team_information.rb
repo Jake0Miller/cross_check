@@ -104,4 +104,12 @@ module TeamInformation
       !game.nil?
     end
   end
+
+  def summary(id,season,type)
+    {win_percentage: win_percent(id,season,type),
+    total_goals_scored: scored(id,season,type),
+    total_goals_against: against(id,season,type),
+    average_goals_scored: avg_scored(id,season,type),
+    average_goals_against: avg_against(id,season,type)}
+  end
 end

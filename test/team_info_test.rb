@@ -93,4 +93,14 @@ class TeamInfoTest < Minitest::Test
     assert_equal [1,3,1,2], @stat_tracker.find_all_losses("3")
     assert_equal [4], @stat_tracker.find_all_losses("14")
   end
+
+  def test_summary
+    games = @stat_tracker.find_games_by_team_id("6").group_by do |game|
+      game[1].season
+    end
+    expected = {:win_percentage=>1.0, :total_goals_scored=>10,
+                :total_goals_against=>5, :average_goals_scored=>3.33,
+                :average_goals_against=>1.67}
+    assert_equal expected, @stat_tracker.summary("6",games.values[0],'R')
+  end
 end

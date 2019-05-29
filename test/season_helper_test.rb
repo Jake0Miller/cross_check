@@ -94,4 +94,23 @@ class SeasonHelperTest < MiniTest::Test
     actual = @stat_tracker.hits_by_team("20122013")
     assert_equal expected, actual
   end
+
+  def test_accurate_team
+    expected = {"6"=>{:shots=>186, :goals=>16}, "3"=>{:shots=>157, :goals=>10}}
+    actual = @stat_tracker.accurate_team("20122013")
+    assert_equal expected, actual
+  end
+
+  def test_coach_info
+    expected = {"John Tortorella"=>{:wins=>1, :games=>5},
+                "Claude Julien"=>{:wins=>4, :games=>5}}
+    actual = @stat_tracker.coach_info("20122013")
+    assert_equal expected, actual
+  end
+
+  def test_coach_win_percentage
+    expected = {"John Tortorella"=>0.2, "Claude Julien"=>0.8}
+    actual = @stat_tracker.coach_win_percentage("20122013")
+    assert_equal expected, actual
+  end
 end
