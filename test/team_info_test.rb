@@ -14,27 +14,27 @@ class TeamInfoTest < Minitest::Test
   def test_find_games_by_team_id
     expected = ["2012030221", "2012030222", "2012030223",
                 "2012030224", "2012030225"]
-    actual = @stat_tracker.find_games_by_team_id("3").map{|game| game.game_id}
+    actual = @stat_tracker.find_games_by_team_id("3").map{|game| game[1].game_id}
     assert_equal expected, actual
   end
 
   def test_games_by_season
     actual = @stat_tracker.games_by_season("6")
-    assert actual["20122013"].all?{|game| game.season == "20122013"}
-    assert actual["20172018"].all?{|game| game.season == "20172018"}
+    assert actual["20122013"].all?{|game| game[1].season == "20122013"}
+    assert actual["20172018"].all?{|game| game[1].season == "20172018"}
   end
 
   def test_won_at_home
-    game_1 = @stat_tracker.games.find{|game| game.game_id == "2012030221"}
+    game_1 = @stat_tracker.games["2012030221".to_sym]
     assert @stat_tracker.won_at_home?("6",game_1)
-    game_3 = @stat_tracker.games.find{|game| game.game_id == "2012030223"}
+    game_3 = @stat_tracker.games["2012030223".to_sym]
     refute @stat_tracker.won_at_home?("3",game_3)
   end
 
   def test_won_away
-    game_1 = @stat_tracker.games.first
+    game_1 = @stat_tracker.games["2012030221".to_sym]
     refute @stat_tracker.won_away?("3",game_1)
-    game_3 = @stat_tracker.games[2]
+    game_3 = @stat_tracker.games["2012030223".to_sym]
     assert @stat_tracker.won_away?("6",game_3)
   end
 
@@ -49,7 +49,7 @@ class TeamInfoTest < Minitest::Test
   end
 
   def test_our_score
-    game_1 = @stat_tracker.games.first
+    game_1 = @stat_tracker.games["2012030221".to_sym]
     assert_equal 3, @stat_tracker.our_score("6",game_1)
     assert_equal 2, @stat_tracker.our_score("3",game_1)
   end
@@ -73,7 +73,7 @@ class TeamInfoTest < Minitest::Test
   end
 
   def test_their_score
-    assert_equal 2, @stat_tracker.their_score("6",@stat_tracker.games[0])
+    assert_equal 2, @stat_tracker.their_score("6",@stat_tracker.games["2012030221".to_sym])
   end
 
   def test_avg_scored
@@ -92,5 +92,15 @@ class TeamInfoTest < Minitest::Test
   def test_find_all_losses
     assert_equal [1,3,1,2], @stat_tracker.find_all_losses("3")
     assert_equal [4], @stat_tracker.find_all_losses("14")
+  end
+
+  def test_summary
+    games = @stat_tracker.find_games_by_team_id("6").group_by do |game|
+      game[1].season
+    end
+    expected = {:win_percentage=>1.0, :total_goals_scored=>10,
+                :total_goals_against=>5, :average_goals_scored=>3.33,
+                :average_goals_against=>1.67}
+    assert_equal expected, @stat_tracker.summary("6",games.values[0],'R')
   end
 end
