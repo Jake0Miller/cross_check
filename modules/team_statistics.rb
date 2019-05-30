@@ -1,8 +1,7 @@
-require 'pry'
 module TeamStatistics
   def team_info(team_id)
     keys = ["team_id", "franchise_id", "short_name", "team_name", "abbreviation", "link"]
-    values = @teams[team_id.to_sym].team_row.to_h.values
+    values = teams[team_id.to_sym].team_row.to_h.values
     keys.zip(values).to_h
   end
 

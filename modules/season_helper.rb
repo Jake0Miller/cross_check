@@ -1,33 +1,21 @@
 module SeasonHelper
-  def all_games_by_season(season_id)
-    @games.find_all do |game|
-      game[1].season == season_id
-    end
-  end
-
   def season_games_by_type(season_id)
-    all_games_by_season(season_id).group_by do |game|
+    all_games_by_season[season_id].group_by do |game|
       game[1].type
     end
   end
 
   def season_game_teams(season_id,type)
-    season_games_by_type(season_id)[type].each_with_object([]) do |game,array|
-      array.push(@game_teams[game[0]])
-    end
-  end
-
-  def season_by_team(season_id,type)
-    season_game_teams(season_id,type).each_with_object({}) do |game_team,hash|
-      hash[game_team.keys[0]] ||= []
-      hash[game_team.keys[0]] << game_team.values[0]
-      hash[game_team.keys[1]] ||= []
-      hash[game_team.keys[1]] << game_team.values[1]
+    season_games_by_type(season_id)[type].each_with_object({}) do |game,hash|
+      game_teams[game[0]].each do |game_team|
+        hash[game_team[0]] ||= []
+        hash[game_team[0]] << game_team[1]
+      end
     end
   end
 
   def wins_by_team(season_id,type)
-    season_by_team(season_id,type).each_with_object({}) do |game_team,hash|
+    season_game_teams(season_id,type).each_with_object({}) do |game_team,hash|
       wins = game_team[1].count do |game|
         game.won == "TRUE"
       end
@@ -45,8 +33,8 @@ module SeasonHelper
   end
 
   def game_teams_by_season(season_id)
-    all_games_by_season(season_id).each_with_object([]) do |game,array|
-      array.push(@game_teams[game[0]].values)
+    all_games_by_season[season_id].each_with_object([]) do |game,array|
+      array.push(game_teams[game[0]].values)
     end.flatten
   end
 

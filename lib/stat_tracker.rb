@@ -19,19 +19,21 @@ class StatTracker
   include SeasonStatistics
   include SeasonHelper
 
-  attr_reader :games, :teams, :game_teams
+  attr_reader :games, :teams, :game_teams, :all_games_by_season
 
-  def initialize(games, teams, game_teams)
+  def initialize(games, teams, game_teams, all_games_by_season)
     @games = games
     @teams = teams
     @game_teams = game_teams
+    @all_games_by_season = all_games_by_season
   end
 
   def self.from_csv(locations)
     games = get_games(locations[:games])
     teams = get_teams(locations[:teams])
     game_teams = get_game_teams(locations[:game_teams])
-    StatTracker.new(games, teams, game_teams)
+    all_games_by_season = get_all_games_by_season(games)
+    StatTracker.new(games, teams, game_teams, all_games_by_season)
   end
 
   def self.get_game_teams(path)
@@ -57,5 +59,11 @@ class StatTracker
       games[row[0].to_sym] = Game.new(row)
     end
     games
+  end
+
+  def self.get_all_games_by_season(games)
+    games.group_by do |game|
+      game[1].season
+    end
   end
 end

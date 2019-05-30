@@ -11,16 +11,6 @@ class SeasonHelperTest < MiniTest::Test
     @stat_tracker = StatTracker.from_csv(@locations)
   end
 
-  def test_all_games_by_season
-    expected = [["2012030221".to_sym, @stat_tracker.games["2012030221".to_sym]],
-                ["2012030222".to_sym, @stat_tracker.games["2012030222".to_sym]],
-                ["2012030223".to_sym, @stat_tracker.games["2012030223".to_sym]],
-                ["2012030224".to_sym, @stat_tracker.games["2012030224".to_sym]],
-                ["2012030225".to_sym, @stat_tracker.games["2012030225".to_sym]]]
-    actual = @stat_tracker.all_games_by_season("20122013")
-    assert_equal expected, actual
-  end
-
   def test_season_games_by_type
     expected = {'R' => [["2012030221".to_sym, @stat_tracker.games["2012030221".to_sym]],
                         ["2012030222".to_sym, @stat_tracker.games["2012030222".to_sym]],
@@ -32,25 +22,21 @@ class SeasonHelperTest < MiniTest::Test
   end
 
   def test_season_game_teams
-    expected = @stat_tracker.game_teams.values[0..2]
-    actual = @stat_tracker.season_game_teams("20122013",'R')
-    assert_equal expected, actual
-  end
-
-  def test_season_by_team
     expected = {"3" => [@stat_tracker.game_teams["2012030221".to_sym]["3"],
                         @stat_tracker.game_teams["2012030222".to_sym]["3"],
                         @stat_tracker.game_teams["2012030223".to_sym]["3"]],
                 "6" => [@stat_tracker.game_teams["2012030221".to_sym]["6"],
                         @stat_tracker.game_teams["2012030222".to_sym]["6"],
                         @stat_tracker.game_teams["2012030223".to_sym]["6"]]}
-    actual = @stat_tracker.season_by_team("20122013",'R')
+    actual = @stat_tracker.season_game_teams("20122013",'R')
     assert_equal expected, actual
   end
 
   def test_wins_by_team
     expected = {"3" => 0.0, "6" => 1.0}
     assert_equal expected, @stat_tracker.wins_by_team("20122013",'R')
+    expected = {"3" => 0.5, "6" => 0.5}
+    assert_equal expected, @stat_tracker.wins_by_team("20122013",'P')
   end
 
   def test_post_reg_difference

@@ -1,8 +1,6 @@
 require './test/test_helper'
 
 class SeasonStatisticsTest < MiniTest::Test
-  include SeasonStatistics
-
   def setup
     @game_path = './data/game_tay.csv'
     @team_path = './data/team_tay.csv'
@@ -54,7 +52,7 @@ class SeasonStatisticsTest < MiniTest::Test
   end
 
   def test_power_play_goal_percentage
-    assert_equal 0.21, @stat_tracker.power_play_goal_percentage("20122013")
-    assert_equal 0.32, @stat_tracker.power_play_goal_percentage("20172018")
+    assert_equal 0.23, @stat_tracker.power_play_goal_percentage("20122013")
+    assert_equal 0.33, @stat_tracker.power_play_goal_percentage("20172018")
   end
 end

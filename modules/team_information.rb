@@ -1,6 +1,6 @@
 module TeamInformation
-  def find_games_by_team_id(team_id, games = @games)
-    games.find_all do |game|
+  def find_games_by_team_id(team_id, our_games = games)
+    our_games.find_all do |game|
       game[1].away_team_id == team_id || game[1].home_team_id == team_id
     end
   end
@@ -41,7 +41,7 @@ module TeamInformation
   end
 
   def win_percent_by_team_hash(our_team_id,games)
-    @teams.each_with_object({}) do |team,hash|
+    teams.each_with_object({}) do |team,hash|
       if team[1].team_id != our_team_id
         this_teams_games = find_games_by_team_id(team[1].team_id, games)
         this_teams_wins = percent_wins(our_team_id, this_teams_games)

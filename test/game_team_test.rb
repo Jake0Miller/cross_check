@@ -17,8 +17,8 @@ class GameTeamTest < Minitest::Test
   def test_attributes
     expected = stub(game_id: "2012030221", team_id: "3",
                     won: "FALSE", hits: 44,
-                    power_play_goals: 0, power_play_opportunities: 3,
-                    shots: 35, goals: 2, head_coach: "John Tortorella")
+                    power_play_goals: 0, shots: 35, goals: 2,
+                    head_coach: "John Tortorella")
     assert_equal @rows[0], @game_teams[0].game_info
     assert_equal @rows[1], @game_teams[1].game_info
     assert_equal expected.game_id, @game_teams[0].game_id
@@ -26,7 +26,6 @@ class GameTeamTest < Minitest::Test
     assert_equal expected.won, @game_teams[0].won
     assert_equal expected.hits, @game_teams[0].hits
     assert_equal expected.power_play_goals, @game_teams[0].power_play_goals
-    assert_equal expected.power_play_opportunities, @game_teams[0].power_play_opportunities
     assert_equal expected.shots, @game_teams[0].shots
     assert_equal expected.goals, @game_teams[0].goals
     assert_equal expected.head_coach, @game_teams[0].head_coach
